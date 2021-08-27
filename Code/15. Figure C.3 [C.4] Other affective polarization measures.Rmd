@@ -1,0 +1,227 @@
+---
+title: "15. Figure C.3 [C.4] Other affective polarization measures"
+---
+
+```{r}
+source('helpers.R')
+df1 = read.csv(paste0(datadir, 's1_survey_long.csv'))
+df2 = read.csv(paste0(datadir, 's2_survey_long.csv'))
+
+df1$data = "Study 1"
+df2$data = "Study 2"
+```
+
+List of equations
+```{r}
+equations = list()
+
+for (dv in c("ap_nt_r", "ap_sd_r", "ap_under_r", "ap_stupid_r")){
+  
+  for (level in c("domain", "page")){
+    for (stat in c("mean_ln")){
+    
+    # MODEL 1
+    equations[[length(equations) + 1]] = data.frame(
+      dv = dv, level = level, stat = stat, 
+      model = "Model 1\nPartisan vs. Non-Partisan News",
+      formula = 
+        paste0(dv, " ~ ", paste(
+          paste0(level, "_", c("center_", "left_", "right_"),
+                 stat), collapse = " + ")))
+    
+    # MODEL 2
+    equations[[length(equations) + 1]] = data.frame(
+      dv = dv, level = level, stat = stat, 
+      model = "Model 2\nCongenial vs. Cross-Cutting News",
+      formula = 
+        paste0(dv, " ~ ", paste(
+          paste0(level, "_", c("congenial_", "cross_"),
+                 stat), collapse = " + ")))
+    
+    # MODEL 3 
+    equations[[length(equations) + 1]] = data.frame(
+      dv = dv, level = level, stat = stat, 
+      model = "Model 3\nStrong vs. Weak Partisans",
+      formula = 
+        paste0(
+          dv, " ~ ", 
+          paste(paste0(level, "_", c("congenial_", "cross_"),
+                stat), collapse = " + "), 
+          " | partisan | ", 
+          paste(paste0(level, "_", c("congenial_", "cross_"),
+                 stat, "*partisan"), collapse = " + ")))
+    
+    }}}
+
+equations = do.call(rbind, equations)
+
+equations = rbind(
+  cbind(study = 1, subset(equations, dv == "ap_nt_r" | dv == "ap_sd_r")),
+  cbind(study = 2, subset(equations, dv == "ap_sd_r" | dv == "ap_stupid_r" | 
+                          dv == "ap_under_r"))
+)
+```
+
+```{r}
+models = list()
+
+for (i in 1:nrow(equations)){
+  
+  eq = equations[i,]
+  
+  if (eq$study == 1){dat = df1} else {dat = df2}
+    
+  # within models  
+  if (grepl("\\*partisan", eq$formula) == F){
+    model = data.frame(summary(plm(
+      as.formula(eq$formula), 
+      data=dat, 
+      index = c("person_id", "wave"), 
+      model="within"))$coefficients)
+    
+    model = tibble::rownames_to_column(model, var = "variable")
+    colnames(model) = c("variable", "est", "se", "t", "p")
+    
+  # within-between models
+  } else {
+    dat$wave = factor(dat$wave, levels = c(1,2), ordered = T)
+    dat = panel_data(dat, id = person_id, wave = wave)
+    model = data.frame(wbm(
+      as.formula(eq$formula), 
+      data = dat, 
+      use.wave = TRUE)@summ$coeftable)
+    model = tibble::rownames_to_column(model, var = "variable")
+    model = select(model, -c("d.f."))
+    colnames(model) = c("variable", "est", "se", "t", "p")
+    model = model[!grepl("imean", model$variable),]
+  }
+  
+  model = merge(model, eq, all = T)
+  model$data = dat$data[1]
+  
+  z = qnorm(0.99)
+  model$lb = model$est - (z*model$se)
+  model$ub = model$est + (z*model$se)
+  
+  models[[length(models) + 1]] = model
+  }
+
+models = do.call(rbind, models)
+```
+
+Rename variables 
+```{r}
+models$dv = recode(models$dv, 
+       `ap_nt_r` = "Negative Traits",
+       `ap_sd_r` = "Social Distance",
+       `ap_under_r` = "No Understanding",
+       `ap_stupid_r` = "Stupid")
+
+models$level = recode(models$level, 
+       `domain` = "News Domains",
+       `page` = "Political News")
+
+models$stat = recode(models$stat, 
+       `mean_ln` = "Mean")
+
+models$variable = 
+  gsub("domain_|page_|_mean_|_perc_|`|\\(|\\)|ln|\\.L", "", models$variable)
+
+models$variable = recode(models$variable,
+        `center` = "7. Centrist News", 
+        `center_perc` = "7. Centrist News", 
+        `left` = "8. Liberal News", 
+        `left_perc` = "8. Liberal News", 
+        `right` = "6. Conservative News", 
+        `right_perc` = "6. Conservative News", 
+        `congenial` = "5. Congenial News", 
+        `congenial_perc` = "5. Congenial News",
+        `cross` = "4. Cross-Cutting News", 
+        `cross_perc` = "4. Cross-Cutting News",
+        `Intercept` = "0. Intercept",
+        `partisan` = "3. Partisanship Strength", 
+        `congenial:partisan` = "2. Congenial × Partisan", 
+        `congenial_perc:partisan` = "2. Congenial × Partisan", 
+        `cross_perc:partisan` = "1. Cross-Cutting × Partisan",
+        `cross:partisan` = "1. Cross-Cutting × Partisan",
+        `wave` = "0. Wave"
+        )
+```
+
+Format models
+```{r}
+models$print = paste0("(B=", round(models$est, 3), 
+                       "; SE=", round(models$se, 3),
+                       "; CI95%=[", round(models$lb, 3), 
+                       ",", round(models$ub, 3), "])")
+
+write.csv(models, paste0(tabdir, "Figure C.3 - Data.csv"))
+```
+
+```{r}
+models = subset(models, variable != "0. Intercept" & variable != "0. Wave")
+models = models[order(models$variable),]
+models$varno = as.numeric(str_split_fixed(models$variable, "\\.", 2)[,1])
+models$varname = str_split_fixed(models$variable, "\\.", 2)[,2]
+```
+
+
+Generate plot
+```{r}
+plotify = function(df){
+  
+  dist = 0.35
+  s = 3
+  
+  for (i in 1:length(unique(df$dv))){
+    
+    if (length(unique(df$dv)) == 2){number = c(-0.5,0.5)[i]} 
+    if (length(unique(df$dv)) == 3){number = c(-1,0,1)[i]}
+    
+    df[df$dv == unique(df$dv)[i], "varno_dist"] = 
+      df$varno[which(df$dv == unique(df$dv)[i])] + (number*dist)
+  }  
+
+plot = ggplot() + 
+  geom_vline(xintercept = 0, linetype = "dashed", colour = "grey60") + 
+  geom_segment(
+    data = df,
+    aes(y = varno_dist, yend = varno_dist, xend = ub, x = lb, colour = dv), 
+    size = s, lineend = "round", alpha = 0.7) + 
+  geom_point(
+    data = df,
+    aes(y = varno_dist, x = est, xmin = lb, xmax = ub, fill = dv),
+    shape = 21, color = "white") +
+  scale_y_continuous(breaks = c(1:8), labels = unique(models$varname)) + 
+  scale_fill_manual(
+    values = c("grey80", "skyblue4", "deepskyblue2", "#00798c")) +
+  scale_colour_manual(
+    values = c("grey80", "skyblue4", "deepskyblue2", "#00798c")) +
+  scale_x_continuous(limits = c(-10,10)) + 
+  facet_grid(model ~ level) + 
+  theme_minimal() + 
+  theme(legend.position = 'bottom', legend.title = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.spacing = unit(2, "lines"), axis.title = element_blank())
+
+return(plot)
+}
+
+plotify(subset(models, study == 1))
+ggsave(
+  paste0(figdir, 
+         "Figure C.3 Other affective polarization measures Study 1.png"), 
+  height = 10, width = 8)
+
+plotify(subset(models, study == 2))
+ggsave(
+  paste0(figdir, 
+         "Figure C.4 Other affective polarization measures Study 2.png"), 
+  height = 10, width = 8)
+```
+
+
+```{r}
+
+```
+

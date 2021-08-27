@@ -1,0 +1,247 @@
+---
+title: "17. Figure C.6 [C.7] Effects for Democrats [Republicans] only"
+---
+
+```{r}
+source('helpers.R')
+df1 = read.csv(paste0(datadir, 's1_survey_long.csv'))
+df2 = read.csv(paste0(datadir, 's2_survey_long.csv'))
+
+df1$data = "Study 1"
+df2$data = "Study 2"
+```
+
+List of equations
+```{r}
+equations = list()
+
+for (dv in c("att_extr_r", "ap_ft_r")){
+  for (level in c("domain", "page")){
+    for (stat in c("mean_ln")){
+    
+    # MODEL 1
+    equations[[length(equations) + 1]] = data.frame(
+      dv = dv, level = level, stat = stat, 
+      model = "Model 1\nPartisan vs. Non-Partisan News",
+      formula = 
+        paste0(dv, " ~ ", paste(
+          paste0(level, "_", c("center_", "left_", "right_"),
+                 stat), collapse = " + ")))
+    
+    # MODEL 2
+    equations[[length(equations) + 1]] = data.frame(
+      dv = dv, level = level, stat = stat, 
+      model = "Model 2\nCongenial vs. Cross-Cutting News",
+      formula = 
+        paste0(dv, " ~ ", paste(
+          paste0(level, "_", c("congenial_", "cross_"),
+                 stat), collapse = " + ")))
+    
+    # MODEL 3 
+    equations[[length(equations) + 1]] = data.frame(
+      dv = dv, level = level, stat = stat, 
+      model = "Model 3\nStrong vs. Weak Partisans",
+      formula = 
+        paste0(
+          dv, " ~ ", 
+          paste(paste0(level, "_", c("congenial_", "cross_"),
+                stat), collapse = " + "), 
+          " | partisan | ", 
+          paste(paste0(level, "_", c("congenial_", "cross_"),
+                 stat, "*partisan"), collapse = " + ")))
+    
+    }}}
+
+equations = do.call(rbind, equations)
+```
+
+```{r}
+models = list()
+
+for (i in 1:nrow(equations)){
+  
+  eq = equations[i,]
+  
+  for (dat in list(df1, df2)){ 
+    
+  for (j in 1:2){
+    
+  dat2 = subset(dat, party_imp == unique(dat$party_imp)[j])
+    
+  # within models  
+  if (grepl("\\*partisan", eq$formula) == F){
+    model = data.frame(summary(plm(
+      as.formula(eq$formula), 
+      data=dat2, 
+      index = c("person_id", "wave"), 
+      model="within"))$coefficients)
+    
+    model = tibble::rownames_to_column(model, var = "variable")
+    colnames(model) = c("variable", "est", "se", "t", "p")
+    
+  # within-between models
+  } else {
+    dat2$wave = factor(dat2$wave, levels = c(1,2), ordered = T)
+    dat2 = panel_data(dat2, id = person_id, wave = wave)
+    model = data.frame(wbm(
+      as.formula(eq$formula), 
+      data = dat2, 
+      use.wave = TRUE)@summ$coeftable)
+    model = tibble::rownames_to_column(model, var = "variable")
+    model = select(model, -c("d.f."))
+    colnames(model) = c("variable", "est", "se", "t", "p")
+    model = model[!grepl("imean", model$variable),]
+  }
+  
+  model = merge(model, eq, all = T)
+  model$data = dat2$data[1]
+  
+  z = qnorm(0.99)
+  model$lb = model$est - (z*model$se)
+  model$ub = model$est + (z*model$se)
+  
+  model$party = unique(dat$party_imp)[j]
+  
+  models[[length(models) + 1]] = model
+  }}
+}
+
+models = do.call(rbind, models)
+```
+
+Rename variables 
+```{r}
+models$dv = recode(models$dv, 
+       `att_extr_r` = "Attitude Extremity",
+       `ap_ft_r` = "Feeling Thermometer")
+
+models$level = recode(models$level, 
+       `domain` = "News Domains",
+       `page` = "Political News")
+
+models$stat = recode(models$stat, 
+       `mean_ln` = "Mean")
+
+models$variable = 
+  gsub("domain_|page_|_mean_|_perc_|`|\\(|\\)|ln|\\.L", "", models$variable)
+
+models$variable = recode(models$variable,
+        `center` = "7. Centrist News", 
+        `center_perc` = "7. Centrist News", 
+        `left` = "8. Liberal News", 
+        `left_perc` = "8. Liberal News", 
+        `right` = "6. Conservative News", 
+        `right_perc` = "6. Conservative News", 
+        `congenial` = "5. Congenial News", 
+        `congenial_perc` = "5. Congenial News",
+        `cross` = "4. Cross-Cutting News", 
+        `cross_perc` = "4. Cross-Cutting News",
+        `Intercept` = "0. Intercept",
+        `partisan` = "3. Partisanship Strength", 
+        `congenial:partisan` = "2. Congenial × Partisan", 
+        `congenial_perc:partisan` = "2. Congenial × Partisan", 
+        `cross_perc:partisan` = "1. Cross-Cutting × Partisan",
+        `cross:partisan` = "1. Cross-Cutting × Partisan",
+        `wave` = "0. Wave"
+        )
+```
+
+Format models
+```{r}
+models$print = paste0("(B=", round(models$est, 3), 
+                       "; SE=", round(models$se, 3),
+                       "; CI95%=[", round(models$lb, 3), 
+                       ",", round(models$ub, 3), "])")
+
+write.csv(models, paste0(tabdir, "Figure C.7 - Data.csv"))
+```
+
+```{r}
+models_a = subset(models, party == "Democrat" & 
+                  variable != "0. Intercept" & 
+                  variable != "0. Wave")
+models_a = models_a[order(models_a$variable),]
+models_a$varno = as.numeric(str_split_fixed(models_a$variable, "\\.", 2)[,1])
+models_a$varname = str_split_fixed(models_a$variable, "\\.", 2)[,2]
+
+dist = 0.24
+s = 3
+
+ggplot() + 
+  geom_vline(xintercept = 0, linetype = "dashed", colour = "grey60") + 
+  geom_segment(data = subset(models_a, data == "Study 1"),
+               aes(y = varno - dist, yend = varno - dist, 
+                   xend = ub, x = lb, colour = data), 
+               size = s, lineend = "round", alpha = 0.7) + 
+  geom_point(data = subset(models_a, data == "Study 1"), 
+             aes(y = varno - dist, x = est, fill = data), 
+             shape = 21, color = "white") + 
+  geom_segment(data = subset(models_a, data == "Study 2"),
+               aes(y = varno + dist, yend = varno + dist, 
+                   xend = ub, x = lb, colour = data), 
+               size = s, lineend = "round", alpha = 0.7) + 
+  geom_point(data = subset(models_a, data == "Study 2"), 
+             aes(y = varno + dist, x = est, fill = data), 
+             shape = 21, color = "white") + 
+  scale_y_continuous(breaks = c(1:8), 
+                     labels = unique(models_a[order(models_a$varno),]$varname))+ 
+  scale_x_continuous(limits = c(-10,10))+ 
+  scale_fill_manual(values = c("grey60", "deepskyblue2")) +
+  scale_colour_manual(values = c("grey60", "deepskyblue2")) +
+  facet_grid(dv + level ~ model) + 
+  theme_minimal() + 
+  theme(legend.position = 'bottom', legend.title = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.spacing = unit(2, "lines"), axis.title = element_blank())
+
+ggsave(paste0(figdir, "Figure C.7 Coefficient Plot Democrats.png"), 
+       height = 10, width = 9)
+```
+
+
+```{r}
+models_a = subset(models, party == "Republican" & 
+                  variable != "0. Intercept" & 
+                  variable != "0. Wave")
+models_a = models_a[order(models_a$variable),]
+models_a$varno = as.numeric(str_split_fixed(models_a$variable, "\\.", 2)[,1])
+models_a$varname = str_split_fixed(models_a$variable, "\\.", 2)[,2]
+
+dist = 0.24
+s = 3
+
+ggplot() + 
+  geom_vline(xintercept = 0, linetype = "dashed", colour = "grey60") + 
+  geom_segment(data = subset(models_a, data == "Study 1"),
+               aes(y = varno - dist, yend = varno - dist, 
+                   xend = ub, x = lb, colour = data), 
+               size = s, lineend = "round", alpha = 0.7) + 
+  geom_point(data = subset(models_a, data == "Study 1"), 
+             aes(y = varno - dist, x = est, fill = data), 
+             shape = 21, color = "white") + 
+  geom_segment(data = subset(models_a, data == "Study 2"),
+               aes(y = varno + dist, yend = varno + dist, 
+                   xend = ub, x = lb, colour = data), 
+               size = s, lineend = "round", alpha = 0.7) + 
+  geom_point(data = subset(models_a, data == "Study 2"), 
+             aes(y = varno + dist, x = est, fill = data), 
+             shape = 21, color = "white") + 
+  scale_y_continuous(breaks = c(1:8), 
+                     labels = unique(models_a[order(models_a$varno),]$varname))+ 
+  scale_x_continuous(limits = c(-10,10))+ 
+  scale_fill_manual(values = c("grey60", "deepskyblue2")) +
+  scale_colour_manual(values = c("grey60", "deepskyblue2")) +
+  facet_grid(dv + level ~ model) + 
+  theme_minimal() + 
+  theme(legend.position = 'bottom', legend.title = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.spacing = unit(2, "lines"), axis.title = element_blank())
+
+ggsave(paste0(figdir, "Figure C.8 Coefficient Plot Republicans.png"), 
+       height = 10, width = 9)
+```
+
+```{r}
+
+```
+

@@ -1,0 +1,66 @@
+---
+title: "11. Figure B.3 [B.4] Overtime variability dependent variables"
+---
+
+Function to create circular plots
+```{r}
+source('helpers.R')
+
+chordify = function(var, varname){
+  # Create an edge list
+  w1 = df[,paste0(var, "_w1")]; w2 = df[,paste0(var, "_w2")]
+  w1[w1 == 100] = 99; w2[w2 == 100] = 99
+  
+  data = data.frame(origin = round_any(as.matrix(w1)[,1],20, floor), 
+                    destination = round_any(as.matrix(w2)[,1],20, floor))
+  data$origin = paste0(data$origin, "-", data$origin+20) 
+  data$destination = paste0(data$destination, "-", data$destination+20)
+  
+  # Transform input data in a adjacency matrix
+  data = with(data, table(origin, destination))
+  
+  gridcol = c(`0-20` = "grey80", `20-40` = "skyblue4", `40-60` = "deepskyblue2", 
+             `60-80` = "#00798c", `80-100` = "#2e4057")
+
+  # Make the circular plot
+  png(filename = paste0(figdir, outname, ".png"), res = 400, height = 3000, 
+      width = 3000)
+  chordDiagram(data, grid.col = gridcol, transparency = 0.5)
+  dev.off()
+}
+```
+
+Use chordify for Study 1 variables
+```{r}
+df = subset(read.csv(paste0(datadir, 's1_survey_wide.csv')), 
+            !is.na(att_extr_r_w1) & !is.na(att_extr_r_w2) & 
+            !is.na(ap_ft_r_w1) & !is.na(ap_ft_r_w2) & 
+            !is.na(ap_sd_r_w1) & !is.na(ap_sd_r_w2) & 
+            !is.na(ap_nt_r_w1) & !is.na(ap_nt_r_w2)
+            )
+
+for (i in c(1:4)){
+  var = c('att_extr_r', 'ap_ft_r', 'ap_sd_r', 'ap_nt_r')[i]
+  outname = 
+    paste0("Figure B.3 Overtime variability dependent variables Study 1 (", 
+           letters[1:4], ")")[i]
+  chordify(var, outname)}
+```
+
+Use chordify for Study 2 variables
+```{r}
+df = subset(read.csv(paste0(datadir, 's2_survey_wide.csv')), 
+            !is.na(att_extr_r_w1) & !is.na(att_extr_r_w2) & 
+            !is.na(ap_ft_r_w1) & !is.na(ap_ft_r_w2) & 
+            !is.na(ap_under_r_w1) & !is.na(ap_under_r_w2) & 
+            !is.na(ap_stupid_r_w1) & !is.na(ap_stupid_r_w2)
+            )
+
+for (i in c(1:4)){
+  var = c('att_extr_r', 'ap_ft_r', 'ap_under_r', 'ap_stupid_r')[i]
+  outname = 
+    paste0("Figure B.4 Overtime variability dependent variables Study 2 (",
+           letters[1:4], ")")[i]
+  chordify(var, outname)}
+```
+

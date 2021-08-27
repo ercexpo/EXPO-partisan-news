@@ -1,0 +1,103 @@
+---
+title: "Figure B.5 [B.6] Variable distributions Study 1 and Study 2"
+---
+
+Function to create geom_ridges plot
+```{r}
+ridgeme = function(data){
+  rescale2 = function(x){
+      x = x/max(x, na.rm = T)
+      x = x*100
+  }
+    
+  data =  transform(data, value2 = ave(value, variable, FUN=rescale2))
+  
+  maxval = 10
+  bins = maxval + 1
+  
+  p = ggplot(data, aes(x = value2, y = 0, fill = variable)) + 
+    geom_density_ridges(stat="binline", bins = bins) + 
+    scale_fill_grey() + 
+    facet_wrap(variable~ ., ncol = 4) + 
+    scale_x_continuous(breaks = seq(0,100,10), limits = c(-10,110)) + 
+    theme_minimal() + 
+    theme(legend.position = 'None', 
+        axis.title = element_blank(), axis.text.y = element_blank(), 
+        panel.grid.minor = element_blank(),
+        axis.text.x = element_text(angle = 90, size = 8, hjust = 1))
+  return(p)
+}
+```
+
+Plot for Study 1
+```{r}
+source('helpers.R')
+df1 = select(read.csv(paste0(datadir, 's1_survey_long.csv')), 
+             c('att_extr_r', 'ap_ft_r', 'ap_sd_r', 'ap_nt_r', 
+               'domain_left_mean_ln', 'domain_right_mean_ln', 
+               'domain_center_mean_ln', 'domain_congenial_mean_ln', 
+               'domain_cross_mean_ln', 'page_left_mean_ln', 
+               'page_right_mean_ln', 'page_center_mean_ln',
+               'page_congenial_mean_ln', 'page_cross_mean_ln'))  
+
+colnames(df1) = 
+             c('Attitude Polarization:\nAttitude Extremity', 
+               'Affective Polarization:\nFeeling Thermometer', 
+               'Affective Polarization:\nSocial Distance', 
+               'Affective Polarization:\nNegative Traits', 
+               'Mean News Domains:\nLiberal', 
+               'Mean News Domains:\nConservative', 
+               'Mean News Domains:\nCentrist', 
+               'Mean News Domains:\nCongenial',
+               'Mean News Domains:\nCross-Cutting',
+               'Mean Political News:\nLiberal', 
+               'Mean Political News:\nConservative', 
+               'Mean Political News:\nCentrist', 
+               'Mean Political News:\nCongenial',
+               'Mean Political News:\nCross-Cutting')
+
+df1 = melt(df1)
+
+ridgeme(df1)
+ggsave(paste0(figdir, "Figure B.5 Variable distributions Study 1.png"), 
+       height = 7, width = 7, device = "png")
+```
+
+Plot for Study 2
+```{r}
+source('helpers.R')
+df2 = select(read.csv(paste0(datadir, 's2_survey_long.csv')), 
+             c('att_extr', 'ap_ft_r', 'ap_under_r', 'ap_stupid_r',
+               'domain_left_mean_ln', 'domain_right_mean_ln', 
+               'domain_center_mean_ln', 'domain_congenial_mean_ln', 
+               'domain_cross_mean_ln', 'page_left_mean_ln', 
+               'page_right_mean_ln', 'page_center_mean_ln',
+               'page_congenial_mean_ln', 'page_cross_mean_ln'))  
+
+
+colnames(df2) = c('Attitude Polarization:\nAttitude Extremity', 
+                  'Affective Polarization:\nFeeling Thermometer', 
+                  'Affective Polarization:\nUnderstanding', 
+                  'Affective Polarization:\nNegative Traits',
+                  'Mean News Domains:\nLiberal', 
+                  'Mean News Domains:\nConservative', 
+                  'Mean News Domains:\nCentrist', 
+                  'Mean News Domains:\nCongenial',
+                  'Mean News Domains:\nCross-Cutting',
+                  'Mean Political News:\nLiberal', 
+                  'Mean Political News:\nConservative', 
+                  'Mean Political News:\nCentrist', 
+                  'Mean Political News:\nCongenial',
+                  'Mean Political News:\nCross-Cutting')
+
+df2 = melt(df2)
+
+ridgeme(df2)
+ggsave(paste0(figdir, "Figure B.6 Variable distributions Study 2.png"), 
+       height = 7, width = 7, device = "png")
+```
+
+```{r}
+
+```
+

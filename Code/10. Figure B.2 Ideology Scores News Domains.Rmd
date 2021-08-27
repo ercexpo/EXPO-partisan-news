@@ -1,0 +1,74 @@
+---
+title: "10. Figure B.2 Ideology scores news domains"
+---
+
+Data processing
+```{r}
+source('helpers.R')
+
+# Import visit data
+domains = data.frame(domain = c(
+  subset(read.csv(paste0(datadir, "s1_trace_visits.csv")),
+         wave %in% c(1,2) & person_id %in% read.csv(paste0(datadir,
+         "s1_survey_long.csv"))$person_id)$domain,
+  subset(read.csv(paste0(datadir, "s2_trace_visits.csv")),
+         wave %in% c(1,2) & person_id %in% read.csv(paste0(datadir,
+         "s2_survey_long.csv"))$person_id)$domain))
+
+# Aggregate and merge with wilson scores
+domains = merge(data.frame(table(domains$domain)),
+                read.csv(paste0(datadir, "wilson_scores.csv")),
+                by.x = "Var1", by.y = "domain")
+domains = dplyr::rename(domains, 
+                        domain = Var1, 
+                        freq = Freq,
+                        wilson_cat = wilson)
+
+# Reorder categories
+domains$wilson_cat = factor(domains$wilson_cat, 
+                            levels = c("Left", "Center", "Right"))
+
+# Horizontal adjustment scores
+domains$hj = 1
+domains$hj[which(domains$score<0)] = 0
+
+# Remove extensions 
+domains$domain = str_split_fixed(domains$domain, "\\.", 2)[,1]
+domains$domain = str_remove(domains$domain, " ")
+
+write.csv(
+  select(domains, c("domain", "freq", "score", "wilson_cat")),
+  paste0(tabdir, "domain_frequencies.csv"))
+
+domains$x = 0
+```
+
+Plot data
+```{r}
+N = 10
+dat = subset(domains, freq >= N)
+
+# Order data according to ideology score
+dat = dat[order(dat$score),]
+dat$order = c(1:nrow(dat))
+dat$freq = log(dat$freq)
+
+ggplot(data = dat) + 
+  geom_segment(data = dat, 
+               aes(x = x, xend= score, y = order, yend = order), size = 0.5) + 
+  geom_point(data = dat, aes(x = score, y = order, size = freq, 
+                            group = wilson_cat, fill = score), shape = 21) + 
+  geom_text(data = dat, aes(x = x, y = order, label = domain, hjust=hj), 
+            vjust=0.5, size = 2) +
+  scale_fill_gradient(low = "white", high = "dodgerblue4") + 
+  facet_wrap(.~wilson_cat, scales = 'free_y', strip.position ="bottom") + 
+  scale_x_continuous(limits = c(-1.25, 1.25)) + 
+  theme_minimal() + 
+  theme(legend.position = 'None', legend.title = element_blank(),
+        axis.title = element_blank(), panel.grid = element_blank(), 
+        strip.text = element_blank(), axis.text = element_blank())
+
+ggsave(paste0(figdir,"Figure B.2 Ideology scores news domains.png"), 
+       units = "cm", height = 35, width = 25)
+```
+

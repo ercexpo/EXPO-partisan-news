@@ -1,0 +1,287 @@
+---
+title: "1. Trace Data Processing [do not run]"
+---
+
+```{r}
+source('helpers.R')
+```
+
+List respondents in survey
+```{r}
+ids_s1 = read_sav(paste0(datadir, "s1_survey_raw.sav"))$w1id
+ids_s2 = subset(read.csv(paste0(datadir, "s2_survey_raw.csv")), 
+                ResponseId_w2!="")$person_id
+```
+
+Import trace data containing the totals, incl. number of active days
+```{r}
+# Set column names
+total_names = c(
+    "person_id", "visits_u_w1", "day_range_w1", "active_days_w1",
+    "count_domains_w1", "visits_u_w2", "day_range_w2", 
+    "active_days_w2", "count_domains_w2")
+
+# Import data 
+totals_s1 = read.csv(paste0(datadir, "s1_trace_totals.csv"), 
+                     col.names = total_names)
+totals_s2 = select(read.csv(paste0(datadir, "s2_trace_totals.csv")),
+                   total_names)
+```
+
+Reformat trace data on a visit level first time opening
+```{r}
+visit_names = c("person_id", "political", "domain", "wilson", 
+                "date", "t", "wave", "home_page")
+
+visits_s1 = select(
+  
+  # Read data 
+  read.csv(paste0(datadir, "s1_trace_visits_raw.csv"), 
+           col.names = c("id", "X", "person_id", "political", "score_domain", 
+                         "wilson", "wilson_score", "created_local_date",
+                         "days_before_survey", "wave", "home_page")),
+  
+  # Select relevant columns 
+  c("person_id", "political", "score_domain", "wilson", 
+    "created_local_date", "days_before_survey", "wave", "home_page")) %>% 
+  
+  subset(wave %in% c(1,2) & !is.na(person_id) & !is.na(wilson)) %>%
+  
+  # Rename columns
+  magrittr::set_names(visit_names)
+
+visits_s2 = select(
+  
+  # Read data and merge with wilson scores
+  merge(read.csv(paste0(datadir, "s2_trace_visits_raw.csv")),
+        read.csv(paste0(datadir, "wilson_scores.csv")),
+        by.x = "score_domain", by.y = "domain", all = T),
+  
+  # Select relevant columns
+  c("person_id", "political", "score_domain", "wilson", 
+    "created_local_date", "days_before_survey", "wave", "home_page")) %>% 
+  
+  subset(wave %in% c(1,2) & !is.na(person_id) & !is.na(wilson)) %>%
+  
+  # Rename columns
+  magrittr::set_names(visit_names) 
+
+
+# Recode home pages as political 
+visits_s2$political[visits_s2$home_page == "true"] = 1
+visits_s2$political = recode(visits_s2$political, `0` = "false", `1` = "true")
+
+visits_s1$political = tolower(visits_s1$political)
+
+write.csv(visits_s1, paste0(datadir, "s1_trace_visits.csv"), row.names = F)
+write.csv(visits_s2, paste0(datadir, "s2_trace_visits.csv"), row.names = F)
+```
+
+
+Function to aggregate visit level data as mean visited (political) news sites
+per day, or as a percentage of total browsing. 
+
+```{r}
+process_trace_data = function(
+  ids = NULL, 
+  totals = NULL, 
+  visits = NULL, 
+  waves = NULL, 
+  domain = F, 
+  page = F, 
+  calculate_mean = F, 
+  calculate_perc = F,
+  n_active_days = 0
+){
+
+# subset correct ids according to number of active days 
+for (i in waves){
+  totals = totals[totals[paste0("active_days_w", i)] >= n_active_days,]
+}
+
+# aggregate data for each wave and for news domains and political news 
+
+visits_list = list()
+
+for (w in waves){
+  
+  for (val in 1:2){
+    
+    # subset wave
+    if (val == 1){
+      temp = subset(visits, wilson != "" & wave == w & political == "true")
+    } else {
+      temp = subset(visits, wilson != "" & wave == w)
+    }
+    
+    temp$y = 0
+    
+    # aggregate data 
+    temp = aggregate(y ~ person_id + wilson,
+                         data = temp, FUN = length)
+    
+    # widen dataset 
+    temp$wilson = factor(temp$wilson)
+    temp = panel_data(temp, id = "person_id", wave = "wilson")
+    temp = widen_panel(temp, separator = "_")
+    temp$person_id = as.character(temp$person_id)
+    
+    if (val == 1){
+      colnames(temp)[2:length(temp)] = 
+        paste0("page_", names(temp)[2:length(temp)], "_w", w)
+    } else {
+      colnames(temp)[2:length(temp)] = 
+        paste0("domain_", names(temp)[2:length(temp)], "_w", w)
+    }
+    
+    visits_list[[length(visits_list) + 1]] = temp
+}}
+
+# bind waves together in wide dataframe
+temp = visits_list[[1]]
+
+for (i in 2:length(visits_list)){
+  temp = merge(temp, visits_list[[i]], by = "person_id")
+}
+
+visits_list = temp
+
+# merge with totals
+visits_list = merge(totals, visits_list, by = "person_id", all.x = T)
+
+# replace NAs by zeros 
+for (col in 2:length(visits_list)){
+  visits_list[is.na(visits_list[,col]),col] = 0
+}
+
+# subset appropriate columns 
+
+  # news domains 
+  if (domain == T){
+      domain_vars = names(visits_list)[grepl("domain", names(visits_list))]
+  } else {domain_vars = c()}
+    
+  # political news
+  if (page == T){
+      page_vars = names(visits_list)[grepl("page", names(visits_list))]
+  } else {page_vars = c()}
+    
+  vars = c(names(totals), page_vars, domain_vars)
+  vars = vars[grepl(paste(paste0("w", waves), collapse = "|"), vars)]
+  
+  temp = select(visits_list, c("person_id", vars))
+
+# calculate means 
+if (calculate_mean == T){
+  
+  for (var in names(temp)[grepl("Left|Center|Right", names(temp))]){
+      
+    for (wave in waves){
+      if (grepl(paste0("_w", wave), var) == T){
+        temp[,paste0(var, "_mean_w", wave)] = 
+          temp[,var] / temp[,paste0("active_days_w", wave)]
+  }}}
+}
+  
+# calculate proportions
+if (calculate_perc == T){
+  
+  vars = names(temp)[grepl("Left|Center|Right", names(temp))]
+  vars = vars[!grepl("_mean", vars)]
+  
+  for (var in vars){
+      
+    for (wave in waves){
+      if (grepl(paste0("_w", wave), var) == T){
+        temp[,paste0(var, "_perc_w", wave)] = 
+          temp[,var] / temp[,paste0("visits_u_w", wave)]
+  }}}
+}
+  
+  colnames(temp) = tolower(names(temp))
+  colnames(temp) = gsub("_y", "", names(temp))
+  
+  for (wave in waves){
+  wave = paste0("_w", wave)
+  names(temp)[grepl(wave, names(temp))] = 
+    paste0(gsub(wave, "", names(temp)[grepl(wave, names(temp))]), wave)
+  }
+  
+  return(temp)
+
+} # end of function
+
+```
+
+```{r}
+s1 = process_trace_data(ids = ids_s1,
+                        totals = totals_s1, 
+                        visits = visits_s1, 
+                        waves = c(1,2), 
+                        domain = T, 
+                        page = T, 
+                        calculate_mean = T, 
+                        calculate_perc = T, 
+                        n_active_days = 7)
+
+s2 = process_trace_data(ids = ids_s2,
+                        totals = totals_s2, 
+                        visits = visits_s2, 
+                        waves = c(1,2), 
+                        domain = T, 
+                        page = T, 
+                        calculate_mean = T, 
+                        calculate_perc = T, 
+                        n_active_days = 7)
+
+write.csv(s1, paste0(datadir, "s1_trace_aggregates.csv"), row.names = F)
+write.csv(s2, paste0(datadir, "s2_trace_aggregates.csv"), row.names = F)
+```
+
+Merge with survey data 
+```{r}
+source('helpers.R')
+s1 = read.csv(paste0(datadir, "s1_trace_aggregates.csv"))
+s2 = read.csv(paste0(datadir, "s2_trace_aggregates.csv"))
+
+df1 = foreign::read.spss(paste0(datadir, "s1_survey_raw.sav"),
+                                to.data.frame = T)
+
+df1$w1id = trimws(df1$w1id, "right")
+df1 = merge(df1, s1, by.x = "w1id", by.y = "person_id")
+
+df2 = merge(
+  subset(read.csv(paste0(datadir, "s2_survey_raw.csv")), ResponseId_w2!=""),
+  s2, by = "person_id")
+  
+write.csv(df1, paste0(datadir, "s1_survey_wide.csv"))
+write.csv(df2, paste0(datadir, "s2_survey_wide.csv"))
+```
+
+Statistics for all users
+```{r}
+s1 = process_trace_data(ids = ids_s1,
+                        totals = totals_s1, 
+                        visits = visits_s1, 
+                        waves = 1, 
+                        domain = T, 
+                        page = T, 
+                        calculate_mean = T, 
+                        calculate_perc = T, 
+                        n_active_days = 0)
+
+s2 = process_trace_data(ids = ids_s2,
+                        totals = totals_s2, 
+                        visits = visits_s2, 
+                        waves = 1, 
+                        domain = T, 
+                        page = T, 
+                        calculate_mean = T, 
+                        calculate_perc = T, 
+                        n_active_days = 0)
+
+write.csv(s1, paste0(datadir, "s1_trace_aggregates_all.csv"), row.names = F)
+write.csv(s2, paste0(datadir, "s2_trace_aggregates_all.csv"), row.names = F)
+```
+
+

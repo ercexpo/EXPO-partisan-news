@@ -1,0 +1,27 @@
+---
+title: "9. Figure B.1 Power "
+---
+
+```{r}
+source("helpers.R")
+df = read_xlsx(paste0(datadir, 'power.xlsx'))
+df_long = data.frame(
+  cohensf = rep(df$cohensf, 4), 
+  study = rep(c(rep("Study 1 (N = 303)", 11), rep("Study 2 (N = 904)", 11)),2),
+  type = c(rep("Main Effects", 22), rep("Moderation Effects", 22)), 
+  power = c(df$S1_main, df$S2_main, df$S1_mod, df$S2_mod)
+)
+```
+
+```{r}
+ggplot(data = df_long, aes(x = cohensf, y = power, color = type)) + 
+  geom_point() + geom_line() + 
+  xlab("Cohen's f") + ylab("% Power") + 
+  facet_grid(. ~ study) + 
+  scale_color_manual(values = c("deepskyblue2", "grey60")) + 
+  theme_minimal() + 
+  theme(legend.position = 'bottom', legend.title = element_blank())
+
+ggsave(paste0(figdir, "Figure B.1 Power.png"), height = 5, width = 10)
+```
+

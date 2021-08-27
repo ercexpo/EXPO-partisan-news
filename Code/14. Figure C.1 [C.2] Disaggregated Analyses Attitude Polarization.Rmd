@@ -1,0 +1,253 @@
+---
+title: "14. Figure C.1 [C.2] Disaggregated analyses attitude polarization"
+---
+
+```{r}
+source('helpers.R')
+df1 = read.csv(paste0(datadir, 's1_survey_long.csv'))
+df2 = read.csv(paste0(datadir, 's2_survey_long.csv'))
+
+df1$data = "Study 1"
+df2$data = "Study 2"
+```
+
+List of equations
+```{r}
+equations = list()
+
+for (study in 1:2){
+  
+  if (study == 1){
+    dvs = c("att_immigrant_fold_r","att_gun_fold_r",
+            "att_musl_fold_r","att_assault_fold_r")
+  } else {
+    dvs = c("att_econ_fold_r", "att_climate_fold_r", 
+            "att_immigrant_fold_r", "att_gun_fold_r")
+  }
+  
+  for (dv in dvs){
+  for (level in c("domain", "page")){
+    for (stat in c("mean_ln")){
+    
+      # MODEL 1
+      equations[[length(equations) + 1]] = data.frame(
+        study = study, dv = dv, level = level, stat = stat, 
+        model = "Model 1\nPartisan vs. Non-Partisan News",
+        formula = 
+          paste0(dv, " ~ ", paste(
+            paste0(level, "_", c("center_", "left_", "right_"),
+                   stat), collapse = " + ")))
+      
+      # MODEL 2
+      equations[[length(equations) + 1]] = data.frame(
+        study = study, dv = dv, level = level, stat = stat, 
+        model = "Model 2\nCongenial vs. Cross-Cutting News",
+        formula = 
+          paste0(dv, " ~ ", paste(
+            paste0(level, "_", c("congenial_", "cross_"),
+                   stat), collapse = " + ")))
+      
+      # MODEL 3 
+      equations[[length(equations) + 1]] = data.frame(
+        study = study, dv = dv, level = level, stat = stat, 
+        model = "Model 3\nStrong vs. Weak Partisans",
+        formula = 
+          paste0(
+            dv, " ~ ", 
+            paste(paste0(level, "_", c("congenial_", "cross_"),
+                  stat), collapse = " + "), 
+            " | partisan | ", 
+            paste(paste0(level, "_", c("congenial_", "cross_"),
+                   stat, "*partisan"), collapse = " + ")))
+    
+    }}}}
+
+equations = do.call(rbind, equations)
+```
+
+```{r}
+models = list()
+
+for (i in 1:nrow(equations)){
+  
+  eq = equations[i,]
+  
+  if (eq$study == 1){ dat = df1 } else { dat = df2 }
+    
+  # within models  
+  if (grepl("\\*partisan", eq$formula) == F){
+    model = data.frame(summary(plm(
+      as.formula(eq$formula), 
+      data=dat, 
+      index = c("person_id", "wave"), 
+      model="within"))$coefficients)
+    
+    model = tibble::rownames_to_column(model, var = "variable")
+    colnames(model) = c("variable", "est", "se", "t", "p")
+    
+  # within-between models
+  } else {
+    dat$wave = factor(dat$wave, levels = c(1,2), ordered = T)
+    dat = panel_data(dat, id = person_id, wave = wave)
+    model = data.frame(wbm(
+      as.formula(eq$formula), 
+      data = dat, 
+      use.wave = TRUE)@summ$coeftable)
+    model = tibble::rownames_to_column(model, var = "variable")
+    model = select(model, -c("d.f."))
+    colnames(model) = c("variable", "est", "se", "t", "p")
+    model = model[!grepl("imean", model$variable),]
+  }
+  
+  model = merge(model, eq, all = T)
+  model$data = dat$data[1]
+  
+  z = qnorm(0.99)
+  model$lb = model$est - (z*model$se)
+  model$ub = model$est + (z*model$se)
+  
+  models[[length(models) + 1]] = model
+}
+
+models = do.call(rbind, models)
+```
+
+Rename variables 
+```{r}
+models$dv = recode(models$dv, 
+       `att_immigrant_fold_r` = "Immigration", 
+       `att_gun_fold_r` = "Gun Control",      
+       `att_musl_fold_r`= "Muslims",    
+       `att_assault_fold_r` = "Sexual Assault", 
+       `att_econ_fold_r` = "Economy",      
+       `att_climate_fold_r` = "Climate Change")
+
+models$level = recode(models$level, 
+       `domain` = "News Domains",
+       `page` = "Political News")
+
+models$stat = recode(models$stat, 
+       `mean_ln` = "Mean",
+       `perc` = "Percentage")
+
+models$variable = 
+  gsub("domain_|page_|_mean_|_perc_|`|\\(|\\)|ln|\\.L", "", models$variable)
+
+models$variable = recode(models$variable,
+        `center` = "7. Centrist News", 
+        `center_perc` = "7. Centrist News", 
+        `left` = "8. Liberal News", 
+        `left_perc` = "8. Liberal News", 
+        `right` = "6. Conservative News", 
+        `right_perc` = "6. Conservative News", 
+        `congenial` = "5. Congenial News", 
+        `congenial_perc` = "5. Congenial News",
+        `cross` = "4. Cross-Cutting News", 
+        `cross_perc` = "4. Cross-Cutting News",
+        `Intercept` = "0. Intercept",
+        `partisan` = "3. Partisanship Strength", 
+        `congenial:partisan` = "2. Congenial × Partisan", 
+        `congenial_perc:partisan` = "2. Congenial × Partisan", 
+        `cross_perc:partisan` = "1. Cross-Cutting × Partisan",
+        `cross:partisan` = "1. Cross-Cutting × Partisan",
+        `wave` = "0. Wave"
+)
+```
+
+Format models
+```{r}
+models$print = paste0("(B=", round(models$est, 3), 
+                       "; SE=", round(models$se, 3),
+                       "; CI95%=[", round(models$lb, 3), 
+                       ",", round(models$ub, 3), "])")
+
+write.csv(models, paste0(tabdir, "Figure C.1 [C.2] - Data.csv"))
+```
+
+Function to generate plot
+```{r}
+models = subset(models, stat == "Mean" & 
+                variable != "0. Intercept" & 
+                variable != "0. Wave")
+
+models = models[order(models$variable),]
+models$varno = as.numeric(str_split_fixed(models$variable, "\\.", 2)[,1])
+models$varname = str_split_fixed(models$variable, "\\.", 2)[,2]
+
+plotify = function(df){
+  lim = max(c(abs(min(df$lb, na.rm = TRUE)),abs(min(df$ub, na.rm = TRUE))))
+  ggplot() + 
+  geom_vline(xintercept = 0, linetype = "dashed", colour = "grey60") + 
+  geom_segment(
+    data = subset(df, dv == unique(df[,"dv"])[1]),
+    aes(y = varno - dist, yend = varno - dist, xend = ub, x = lb, colour = dv), 
+    size = s, lineend = "round", alpha = 0.7) + 
+  geom_point(
+    data = subset(df, dv == unique(df[,"dv"])[1]),
+    aes(y = varno - dist, x = est, xmin = lb, xmax = ub, fill = dv),
+    shape = 21, color = "white") + 
+  geom_segment(
+    data = subset(df, dv == unique(df[,"dv"])[2]),
+    aes(y = varno + dist, yend = varno + dist, xend = ub, x = lb, colour = dv),
+    size = s, lineend = "round", alpha = 0.7) + 
+  geom_point(
+    data = subset(df, dv == unique(df[,"dv"])[2]),
+    aes(y = varno + dist, x = est, xmin = lb, xmax = ub, fill = dv), 
+    shape = 21, color = "white") +
+  geom_segment(
+    data = subset(df, dv == unique(df[,"dv"])[3]),
+    aes(y = varno - (mult*dist), yend = varno - (mult*dist), 
+        xend = ub, x = lb, colour = dv), 
+    size = s, lineend = "round", alpha = 0.7) + 
+  geom_point(
+    data = subset(df, dv == unique(df[,"dv"])[3]),
+    aes(y = varno - (mult*dist), x = est, xmin = lb, xmax = ub, fill = dv), 
+    shape = 21, color = "white") + 
+  geom_segment(
+    data = subset(df, dv == unique(df[,"dv"])[4]),
+    aes(y = varno + (mult*dist), yend = varno + (mult*dist), 
+        xend = ub, x = lb, colour = dv), 
+    size = s, lineend = "round", alpha = 0.7) + 
+  geom_point(
+    data = subset(df, dv == unique(df[,"dv"])[4]),
+    aes(y = varno + (mult*dist), x = est, xmin = lb, xmax = ub, fill = dv), 
+    shape = 21, color = "white") +
+  scale_y_continuous(breaks = c(1:8), labels = unique(models$varname)) + 
+  scale_fill_manual(
+    values = c("grey80", "skyblue4", "deepskyblue2", "#00798c")) +
+  scale_colour_manual(
+    values = c("grey80", "skyblue4", "deepskyblue2", "#00798c")) +
+  scale_x_continuous(limits = c(-10, 10)) + 
+  facet_grid(model ~ level) + 
+  theme_minimal() + 
+  theme(legend.position = 'bottom', legend.title = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.spacing = unit(2, "lines"), axis.title = element_blank())
+}
+```
+
+
+Plot results and store
+```{r}
+dist = 0.1
+s = 1.5
+mult = 3
+
+plotify(subset(models, data == "Study 1" & stat == "Mean"))
+ggsave(
+  paste0(figdir, 
+  "Figure C.1 Disaggregated analyses attitude polarization Study 1.png"), 
+  height = 10, width = 8)
+
+plotify(subset(models, data == "Study 2" & stat == "Mean"))
+ggsave(
+  paste0(figdir, 
+  "Figure C.2 Disaggregated analyses attitude polarization Study 2.png"), 
+  height = 10, width = 8)
+```
+```{r}
+
+```
+
+
+

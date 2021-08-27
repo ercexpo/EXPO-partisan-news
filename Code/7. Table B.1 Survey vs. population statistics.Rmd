@@ -1,0 +1,229 @@
+---
+title: "7. Table B.1. Survey vs. population statistics"
+---
+
+```{r}
+tab = data.frame(
+  value = c(
+    "Age: 0–17", "Age: 18–24", "Age: 25–54", "Age: 55–64", "Age: 65+",
+    # Education
+    "Education: Less than high school", "Education: High school",
+    "Education: Junior college", "Education: Bachelor",
+    "Education: Graduate school",
+    # Ethnicity
+    "Ethnicity: White", "Ethnicity: Black", "Ethnicity: Other",
+    # Sex
+    "Sex: Male", "Sex: Female",
+    # Party
+    "Party: Democrat", "Party: Independent", "Party: Republican",
+    # Ideology
+    "Ideology: Left", "Ideology: Center", "Ideology: Right"),
+  
+  population = c(
+    18.73, 13.27, 39.45, 12.91, 15.63, # age
+    9.92, 28.11, 27.34, 22.55, 12.07, # education
+    60.1, 12.2, 26.7, # ethnicity 
+    48.9, 51.1, rep(NA, 6) # sex 
+    ),
+  
+  gss = c(
+    0.00, 8.41, 51.52, 17.04, 23.02, # age
+    11.16, 50.17, 8.35, 19.80, 10.52, # education
+    72.32, 16.45, 11.50, # ethnicity
+    44.80, 55.20, # sex
+    46.38, 18.49, 24.29, # partisanship
+    29.19, 38.05, 32.76 # ideology
+  ))
+```
+
+Recode values survey data to fit table categories
+```{r}
+source("helpers.R")
+df1 = read.csv(paste0(datadir, "s1_survey_wide.csv"))
+df2 = read.csv(paste0(datadir, "s2_survey_wide.csv"))
+
+# Recode Age
+df1$age = recode(df1$age, 
+                 `65+` = "Age: 65+", `35-39` = "Age: 25–54", 
+                 `18-24` = "Age: 18–24", `30-34` = "Age: 25–54", 
+                 `50-54` = "Age: 25–54", `45-49` = "Age: 25–54", 
+                 `25-29` = "Age: 25–54", `55-59` = "Age: 55–64", 
+                 `40-44` = "Age: 25–54", `60-64` = "Age: 55–64")
+
+df2$age = case_when(
+  df2$age %in% 0:17 ~ "Age: 0–17",
+  df2$age %in% 18:24 ~ "Age: 18–24",
+  df2$age %in% 25:54 ~ "Age: 25–54",
+  df2$age %in% 55:64 ~ "Age: 55–64",
+  df2$age %in% 65:200 ~ "Age: 65+")
+
+# Recode Gender
+
+df1$gender = recode(df1$gender,
+                    `Female` = "Sex: Female", `Male` = "Sex: Male")
+df2$gender = recode(df2$gender_fac,
+                    `Female` = "Sex: Female", `Male` = "Sex: Male")
+
+# Recode Education
+
+df1$edu = 
+  recode(df1$edu,
+    `Graduate degree` = "Education: Graduate school", 
+    `Some graduate school` = "Education: Graduate school", 
+    `4 year college degree (BA, BS)` = "Education: Bachelor", 
+    `Some college` = "Education: Junior college", 
+    `2 year college degree (Associates Degree)` = "Education: Junior college", 
+    `High school` = "Education: High school", 
+    `Less than high school` = "Education: Less than high school"
+    )
+
+df2$edu_fac = 
+  recode(df2$edu_fac,
+    `Associate Degree` = "Education: Junior college", 
+    `College Degree (such as B.A., B.S.)` = "Education: Bachelor", 
+    `High school graduate` = "Education: High school", 
+    `Master's degree` = "Education: Graduate school", 
+    `Completed some college, but no degree` = "Education: Junior college", 
+    `Completed some graduate, but no degree` = "Education: Bachelor", 
+    `Doctorate degree` = "Education: Graduate school", 
+    `Other post-high school vocational training` = "Education: High school", 
+    `Middle School - Grades 4-8` = "Education: Less than high school", 
+    `Completed some high school` = "Education: Less than high school"
+  )
+
+# Ethnicity 
+
+df1$ethn = recode(df1$ethn,
+    `Non-Hispanic White` = "Ethnicity: White", 
+    `Black or African American` = "Ethnicity: Black",
+    `Prefer not to respond` = "Ethnicity: Other", 
+    `Asian or Asian American` = "Ethnicity: Other", 
+    `American Indian or Alaska Native` = "Ethnicity: Other", 
+    `Hispanic or Latino` = "Ethnicity: Other",               
+    )
+
+df2$ethn_fac = recode(df2$ethn_fac,
+    `White` = "Ethnicity: White", 
+    `Native American` = "Ethnicity: Other", 
+    `Prefer to self-describe` = "Ethnicity: Other", 
+    `Black` = "Ethnicity: Black", 
+    `Asian` = "Ethnicity: Other", 
+    `NA` = "Ethnicity: Other",                   
+    )
+
+# Party
+df1$party[grepl("Democrat", df1$party)] = "Party: Democrat"
+df1$party[grepl("Republican", df1$party)] = "Party: Republican"
+df1$party[grepl("Independent", df1$party)] = "Party: Independent"
+
+df2$party = recode(df2$party_fac,
+ `A not very strong Democrat` = "Party: Democrat", 
+ `A strong Democrat` = "Party: Democrat", 
+ `Independent, lean toward Democrat` = "Party: Democrat", 
+ `Independent (close to neither parity)` = "Party: Independent", 
+ `A strong Republican` = "Party: Republican", 
+ `Independent, lean toward Republican` = "Party: Republican", 
+ `A not very strong Republican` = "Party: Republican", 
+ `6` = "Party: Republican", 
+ `5` = "Party: Independent", 
+ `1` = "Party: Democrat", 
+ `2` = "Party: Democrat",
+)
+
+# Ideology 
+df2$ideo_cat[df2$ideo < 5] = "Ideology: Left"
+df2$ideo_cat[df2$ideo == 5] = "Ideology: Center"
+df2$ideo_cat[df2$ideo > 5] = "Ideology: Right"
+
+df1$ideo[grepl(paste(0:4, collapse = "|"), df1$ideo)] = "Ideology: Left"
+df1$ideo[grepl("5", df1$ideo)] = "Ideology: Center"
+df1$ideo[grepl(paste(6:10, collapse = "|"), df1$ideo)] = "Ideology: Right"
+```
+
+Tabulate percentages 
+```{r}
+proptab = function(x, var) {
+  x = x[x %in% tab$value]
+  x = data.frame(prop.table(table(x)))
+  x$Freq = x$Freq*100
+  colnames(x) = c("value", var)
+  x[,var] = sprintf("%.2f", x[,var])
+  return(x)}
+
+# Study 1
+s1 = rbind(
+  proptab(df1$age, "Study 1"),
+  proptab(df1$edu, "Study 1"), 
+  proptab(df1$ethn, "Study 1"),
+  proptab(df1$gender, "Study 1"),
+  proptab(df1$party, "Study 1"),
+  proptab(df1$ideo, "Study 1"))
+
+tab = merge(tab, s1, by = "value", all = T)
+
+# Study 2
+
+s2 = rbind(
+  proptab(df2$age, "Study 2"),
+  proptab(df2$edu_fac, "Study 2"), 
+  proptab(df2$ethn_fac, "Study 2"),
+  proptab(df2$gender, "Study 2"),
+  proptab(df2$party, "Study 2"),
+  proptab(df2$ideo_cat, "Study 2"))
+
+tab = merge(tab, s2, by = "value", all = T)
+
+write_xlsx(tab, 
+           paste0(tabdir, "Table B.1 Survey vs. Population Statistics.xlsx"))
+```
+
+Table B.2
+```{r}
+source("helpers.R")
+df1 = read.csv(paste0(datadir, "s1_survey_wide.csv"))
+df2 = read.csv(paste0(datadir, "s2_survey_wide.csv"))
+
+
+# Age 
+df1$age %>%
+  recode("18-24" = 1, "25-29" = 2, "30-34" = 3, "35-39" = 4, "40-44" = 5, 
+         "45-49" = 6, "50-54" = 7, "55-59" = 8, "60-64" = 9, "65+" = 10) %>%
+  describe()
+
+describe(df2$age)
+
+# Education level
+df1$edu %>% 
+  factor(levels = c(
+    "Less than high school", "High school", "Some college",
+    "2 year college degree (Associates Degree)", 
+    "4 year college degree (BA, BS)", "Some graduate school",
+    "Graduate degree"), ordered = T) %>%
+  as.numeric() %>% describe()
+
+df2$edu_fac %>%
+  factor(levels = c(
+    "Middle School - Grades 4-8", "Completed some high school",
+    "High school graduate", "Other post-high school vocational training",
+    "Completed some college, but no degree", "Associate Degree" ,
+    "College Degree (such as B.A., B.S.)", "Master's degree",
+    "Completed some graduate, but no degree", "Doctorate degree"
+  )) %>% as.numeric() %>% describe()
+
+# Political interest 
+rowMeans(cbind(
+  as.numeric(gsub("([0-9]+).*$", "\\1", df1$interest_pol_1)),
+  as.numeric(gsub("([0-9]+).*$", "\\1", df1$interest_pol_2)))) %>%
+  describe()
+
+# Approval of Trump
+df1$approve_trump_w1 %>% 
+  recode("Strongly disapprove" = 1, "Disapprove" = 2,
+         "Somewhat disapprove" = 3, "Neither disapprove nor approve" = 4, 
+         "Somewhat approve" = 5, "Approve" = 6, "Strongly approve" = 7) %>% 
+  describe()
+
+describe(df2$approve_trump_w1)
+
+```
+

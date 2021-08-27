@@ -1,0 +1,59 @@
+---
+title: "Table A.3 Additional statistics raw trace data"
+---
+
+```{r}
+source('helpers.R')
+
+df1 = read.csv(paste0(datadir, "s1_trace_aggregates.csv"))
+df2 = read.csv(paste0(datadir, "s2_trace_aggregates.csv"))
+
+df1_all = read.csv(paste0(datadir, "s1_trace_aggregates_all.csv"))
+df2_all = read.csv(paste0(datadir, "s2_trace_aggregates_all.csv"))
+```
+
+```{r}
+stats = c("mean", "sd", "median")
+vars = c(paste0("domain_", c("left", "center", "right")),
+         paste0("page_", c("left", "center", "right")))
+
+varsumm = list()
+
+for (i in 1:6){
+    #i = 2
+    dat = list(
+      df1_all, df1, df1,
+      df2_all, df2, df2
+    )[[i]]
+    
+    wave = c("_w1", "_w1", "_w2", "_w1", "_w1", "_w2")[i]
+    suffix = c("_all", "_w1", "_w2", "_all", "_w1", "_w2")[i]
+    
+    outlist = list()
+    
+  for (var in vars){  
+    
+    out = select(describe(dat[paste0(var, wave)]), stats)
+    out$total = sum(dat[paste0(var, wave)])
+    colnames(out) = paste0(names(out), suffix)
+    out$variable = var  
+    
+    for (col in 1:4){out[,col] = sprintf("%.2f", out[,col])}
+    
+    outlist[[length(outlist) + 1]] = out
+    
+  }
+  
+  varsumm[[length(varsumm)+1]] = do.call(rbind, outlist)
+    
+  }
+  
+s1 = reshape::merge_recurse(list(varsumm[[1]], varsumm[[2]], varsumm[[3]]))
+s2 = reshape::merge_recurse(list(varsumm[[4]], varsumm[[5]], varsumm[[6]]))
+
+write_xlsx(s1, paste0(tabdir, "Table A.3 Study 1.xlsx"))
+write_xlsx(s2, paste0(tabdir, "Table A.3 Study 2.xlsx"))
+```
+
+
+

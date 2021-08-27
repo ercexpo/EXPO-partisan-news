@@ -1,0 +1,63 @@
+---
+title: "12. Table B.5 Summary statistics"
+---
+
+```{r}
+source('helpers.R')
+df1 = read.csv(paste0(datadir, "s1_survey_long.csv"))
+df2 = read.csv(paste0(datadir, "s2_survey_long.csv"))
+
+df1$partisan = abs(4 - df1$partisan)
+
+vars = c("data", "wave", "ap_ft_r", "att_extr_r",  
+         names(df1)[grepl("domain.*mean_ln|page.*mean_ln", names(df1))],
+         "partisan")
+
+df1$data = "Study 1"
+df2$data = "Study 2"
+df1 = select(df1, vars); 
+df2 = select(df2, vars)
+
+df1$data = "Study 1"
+df2$data = "Study 2"
+
+df = rbind.fill(df1, df2)
+```
+
+```{r}
+dvs = vars[3:15]
+
+summ = list()
+
+for (i in 1:length(vars[3:15])){
+  
+  var = dvs[i]
+  
+  summ[[i]] = cbind(var, 
+      describe(df[which(df$wave ==1 & df$data == "Study 1"), var]) %>%
+        select(mean, median, sd) %>% 
+        `colnames<-`(paste0(c("mean", "median", "sd"), "_s1_w1")),
+      describe(df[which(df$wave ==2 & df$data == "Study 1"), var]) %>%
+        select(mean, median, sd) %>% 
+        `colnames<-`(paste0(c("mean", "median", "sd"), "_s1_w2")),
+      describe(df[which(df$wave ==1 & df$data == "Study 2"), var]) %>%
+        select(mean, median, sd) %>% 
+        `colnames<-`(paste0(c("mean", "median", "sd"), "_s2_w1")),
+      describe(df[which(df$wave ==2 & df$data == "Study 2"), var]) %>%
+        select(mean, median, sd) %>% 
+        `colnames<-`(paste0(c("mean", "median", "sd"), "_s2_w2"))
+  )
+}
+
+summ = do.call(rbind, summ)
+
+for (i in names(summ)){
+  if (grepl("^n_|var", i) == F){
+    summ[,i] = sprintf("%.2f", summ[,i])
+  }
+}
+
+write_xlsx(summ, paste0(tabdir, "Table B.5 Summary statistics.xlsx"))
+```
+
+

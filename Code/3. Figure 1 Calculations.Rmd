@@ -1,0 +1,112 @@
+---
+title: "3. Figure 1 Calculations"
+---
+
+```{r}
+source('helpers.R')
+
+# Trace data visits 
+visits_s1 = subset(read.csv(paste0(datadir, "s1_trace_visits.csv")),
+                   wave %in% c(1,2))
+visits_s2 = subset(read.csv(paste0(datadir, "s2_trace_visits.csv")),
+                   wave %in% c(1,2))
+visits_s2 = visits_s2[!is.na(visits_s2$wilson) & !is.na(visits_s2$person_id),]
+
+names(visits_s1)[names(visits_s1) == 'wilson_cat'] = 'wilson'
+
+# trace data containing the totals, incl. number of active days
+totals_s1 = read.csv(paste0(datadir, "s1_trace_totals.csv"))
+totals_s2 = read.csv(paste0(datadir, "s2_trace_totals.csv"))
+
+names(totals_s1)[names(totals_s1) == 'visits_w1'] = 'visits_u_w1'
+names(totals_s1)[names(totals_s1) == 'visits_w2'] = 'visits_u_w2'
+```
+
+Function to calculate statistics 
+```{r}
+addcalculations = function(study, active, political, partisan){
+  
+  active_text = "All"
+  
+  if (study == "Study 1"){
+    data = visits_s1
+    totals = totals_s1
+  }
+  
+  if (study == "Study 2"){
+    data = visits_s2
+    totals = totals_s2
+  }
+  
+  if (study == "Both"){
+    data = rbind.fill(visits_s1, visits_s2)
+    totals = rbind.fill(totals_s1, totals_s2)
+  }
+  
+  if (active == TRUE){
+    active_users = totals$person_id[which(totals$active_days_w1>6
+                                    & totals$active_days_w2>6)]
+    data = data[data$person_id %in% active_users,]
+    totals = totals[totals$person_id %in% active_users,]
+    active_text = "Active"
+  }
+  
+  tot = sum(totals$visits_u_w1 + totals$visits_u_w2)
+  
+  if (partisan == T){
+    data = subset(data, wilson == "Left" | wilson == "Right")
+  } 
+  
+  
+  if (political == T){
+    data = subset(data, political == "true")
+    pol_txt = "Political news visits" 
+  } else {
+    pol_txt = "News visits" 
+  }
+  
+  attach(data)
+  
+  addrow = function(study, pol_txt, count){
+    newrow = data.frame(
+      study = study, 
+      statistic = pol_txt,
+      count = count,
+      active = active, 
+      partisan = partisan, 
+      total = tot
+    )
+    return(newrow)
+  }
+  
+  out = 
+  rbind(
+    addrow(study, paste0(pol_txt, ": Total"), nrow(data)),
+    addrow(study, paste0(pol_txt, ": Left"), nrow(data[wilson == "Left",])),
+    addrow(study, paste0(pol_txt, ": Right"), nrow(data[wilson == "Right",])),
+    addrow(study, paste0(pol_txt, ": Center"), nrow(data[wilson == "Center",]))
+  )
+  
+  out[,"perc_within"] = NA
+  for (i in 1:4){
+    total = out[1, "count"]
+    out[i,"perc_within"] = (out$count[i] / total)*100 
+  }
+  
+  out$perc_total = (out$count/out$tot)*100
+  
+  return(out)
+}
+```
+
+```{r}
+summstats = rbind(
+  addcalculations("Both", T, F, F),
+  addcalculations("Both", T, T, F),
+  addcalculations("Both", T, F, T),
+  addcalculations("Both", T, T, T))
+
+write_xlsx(summstats, paste0(tabdir, "Figure 1 - Data.xlsx"))
+```
+
+

@@ -1,0 +1,699 @@
+---
+title: "2. Survey Data Processing [do not run]"
+---
+
+```{r}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+
+```{r}
+source('helpers.R')
+trace_names = 
+  names(read.csv(paste0(datadir, "s1_trace_aggregates.csv")))
+trace_names = trace_names[2:length(trace_names)]
+```
+
+## Import and mutate data 
+
+Open data Study 1 and select and rename relevant columns
+```{r}
+df1 = select(read.csv(paste0(datadir, "s1_survey_wide.csv")), c(
+  
+  # DEMOGRAPHICS (WAVE 1)
+  "w1id", "q3.5_gender", "q3.6_edu", "q3.7_age", "q3.8_race", "q3.10_state_rpt_l", 
+  
+  # BACKRGOUND ATTITUDES (BOTH WAVES)
+  "q3.2_pol_interest_1", "q3.2_pol_interest_2", "q3.3_follow_pol_1", 
+  "q3.3_follow_pol_2", "party1", "q5.22_ideology_1", "q5.24_t_approval_1", 
+  
+  # ATTITUDE POLARIZATION (BOTH WAVES)
+  "immigrants_1_1", "immigrants_4_1", "immigrants_5_1", "immigrants_6_1", 
+  "immigrants_8_1", "immigrants_1_2", "immigrants_4_2", "immigrants_5_2", 
+  "immigrants_6_2", "immigrants_8_2",
+  "q5.8_rape_q5.8_favor_victim_1", "q5.8_rape_q5.8_false_accusation_1",
+  "q5.8_rape_q5.8_get_back_1", "q5.8_rape_q5.8_attention_1",
+  "q5.8_rape_q5.8_favor_victim_2", "q5.8_rape_q5.8_false_accusation_2",
+  "q5.8_rape_q5.8_get_back_2", "q5.8_rape_q5.8_attention_2",
+  "q5.6_prevent_gun_v_q5.6_more_carry_1", 
+  "q5.6_prevent_gun_v_q5.6_mental_health_1",
+  "q5.6_prevent_gun_v_q5.6_more_laws_1", "q5.6_prevent_gun_v_q5.6_21_1",
+  "q5.6_prevent_gun_v_q5.6_teachers_1", "q5.6_prevent_gun_v_q5.6_more_carry_2",
+  "q5.6_prevent_gun_v_q5.6_mental_health_2",
+  "q5.6_prevent_gun_v_q5.6_more_laws_2", "q5.6_prevent_gun_v_q5.6_21_2",
+  "q5.6_prevent_gun_v_q5.6_teachers_2", "q5.7_muslims_q5.7_profiling_1",
+  "q5.7_muslims_q5.7_extreme_1", "q5.7_muslims_q5.7_violence_1",
+  "q5.7_muslims_q5.7_not_mainstream_1", "q5.7_muslims_q5.7_profiling_2",
+  "q5.7_muslims_q5.7_extreme_2", "q5.7_muslims_q5.7_violence_2",
+  "q5.7_muslims_q5.7_not_mainstream_2",
+  
+  # AFFECTIVE POLARIZATION (BOTH WAVES)
+  "q5.2_feeling_thermom_1_1", "q5.2_feeling_thermom_4_1", 
+  "q5.2_feeling_thermom_1_2", "q5.2_feeling_thermom_4_2", 
+  "dem_are_q4.12_mean_1", "dem_are_q4.12_hypocrit_1", 
+  "repub_are_q4.13_mean_1", "repub_are_q4.13_hypocritical_1",
+  "dem_are_q4.12_mean_2", "dem_are_q4.12_hypocrit_2", 
+  "repub_are_q4.13_mean_2", "repub_are_q4.13_hypocritical_2",
+  "q5.12_dem_supporter_q4.10_friend_1", "q5.12_dem_supporter_q4.10_work_1", 
+  "q5.12_dem_supporter_q4.10_relative_1", 
+  "q5.12_dem_supporter_q4.10_neighbor_1",
+  "q5.12_dem_supporter_q4.10_friend_2", "q5.12_dem_supporter_q4.10_work_2", 
+  "q5.12_dem_supporter_q4.10_relative_2",
+  "q5.12_dem_supporter_q4.10_neighbor_2",
+  "q5.13_r_supporter_q4.10_friend_1", "q5.13_r_supporter_q4.10_work_1", 
+  "q5.13_r_supporter_q4.10_relative_1", "q5.13_r_supporter_q4.10_neighbor_1",
+  "q5.13_r_supporter_q4.10_friend_2", "q5.13_r_supporter_q4.10_work_2", 
+  "q5.13_r_supporter_q4.10_relative_2", "q5.13_r_supporter_q4.10_neighbor_2",
+  trace_names
+))
+```
+
+Rename columns and recode variables
+```{r}
+colnames(df1) = c(
+ 
+  # DEMOGRAPHICS (WAVE 1)
+  "person_id", "gender_w0", "edu_w0", "age_w0", "ethn_w0", "state_w0", 
+  
+  # BACKRGOUND ATTITUDES (BOTH WAVES)
+  "interest_pol_1", "interest_pol_2", "follow_1_w0", "follow_2_w0",
+  "party_w0", "ideo_w0", "approve_trump_w1", 
+  
+  # ATTITUDE POLARIZATION (BOTH WAVES)
+  "att_immigrant_1_w1", "att_immigrant_2_w1", "att_immigrant_3_w1", 
+  "att_immigrant_4_w1", "att_immigrant_5_w1", "att_immigrant_1_w2", 
+  "att_immigrant_2_w2", "att_immigrant_3_w2", "att_immigrant_4_w2", 
+  "att_immigrant_5_w2",
+  
+  "att_assault_1_w1", "att_assault_2_w1", "att_assault_3_w1", 
+  "att_assault_4_w1", "att_assault_1_w2", "att_assault_2_w2", 
+  "att_assault_3_w2", "att_assault_4_w2",
+  
+  "att_gun_1_w1", "att_gun_2_w1", "att_gun_3_w1", "att_gun_4_w1", 
+  "att_gun_5_w1", "att_gun_1_w2", "att_gun_2_w2", "att_gun_3_w2", 
+  "att_gun_4_w2", "att_gun_5_w2", 
+  
+  "att_musl_1_w1", "att_musl_2_w1", "att_musl_3_w1", "att_musl_4_w1", 
+  "att_musl_1_w2", "att_musl_2_w2", "att_musl_3_w2", "att_musl_4_w2",
+
+  # AFFECTIVE POLARIZATION (BOTH WAVES)
+  "ft_dem_supporters_w1", "ft_rep_supporters_w1", 
+  "ft_dem_supporters_w2", "ft_rep_supporters_w2", 
+  
+  "negtrait_dem_1_w1", "negtrait_dem_2_w1", "negtrait_rep_1_w1", 
+  "negtrait_rep_2_w1", "negtrait_dem_1_w2", "negtrait_dem_2_w2", 
+  "negtrait_rep_1_w2", "negtrait_rep_2_w2",
+  
+  "socdis_dem_1_w1", "socdis_dem_2_w1", "socdis_dem_3_w1",  "socdis_dem_4_w1", 
+  "socdis_dem_1_w2", "socdis_dem_2_w2", "socdis_dem_3_w2", "socdis_dem_4_w2", 
+  "socdis_rep_1_w1", "socdis_rep_2_w1", "socdis_rep_3_w1", "socdis_rep_4_w1",
+  "socdis_rep_1_w2", "socdis_rep_2_w2", "socdis_rep_3_w2", "socdis_rep_4_w2",
+  trace_names
+)
+```
+
+
+Open data Study 2 and select relevant columns. 
+```{r}
+df2 = subset(read.csv(paste0(datadir, "s2_survey_wide.csv")), ResponseId_w2!="")
+
+# select columns: 
+
+df2 = select(df2, c(
+  # demographics
+  "person_id", "gender_w0_fac", "edu_w0_fac", "age_w0", "ethn_w0_fac", "zip_w0",
+
+  # background info
+  "party_w0_fac", "party_w1", "party_w2", "embed_imputed_party_w2", "ideo_w0", 
+  "approve_trump_w1", 
+  
+  # attitude polarization
+  paste0("att_econ_", c(1:3), "_w1"), paste0("att_econ_", c(1:3), "_w2"),
+  paste0("att_climate_", c(1:3), "_w1"), paste0("att_climate_", c(1:3), "_w2"),
+  paste0("att_immigrant_", c(1:3), "_w1"), 
+  paste0("att_immigrant_", c(1:3), "_w2"),
+  paste0("att_gun_", c(1:3), "_w1"), paste0("att_gun_", c(1:3), "_w2"),
+  
+  # affective polarization
+  "ft_dem_supporters_w1", "ft_dem_supporters_w2", "ft_rep_supporters_w1", 
+  "ft_rep_supporters_w2", "understand_party_opp_w1", "understand_party_opp_w2",
+  "stupid_party_opp_w1", "stupid_party_opp_w2", "talk_party_opp_w1", 
+  "talk_ind_dem_w1", "talk_ind_rep_w1", "talk_party_opp_w2", 
+  "findout_party_opp_w1", "findout_ind_dem_w1", "findout_ind_rep_w1",
+  "findout_party_opp_w2", "spendtime_party_opp_w1", "spendtime_ind_dem_w1", 
+  "spendtime_ind_rep_w1", "spendtime_party_opp_w2",
+  "spend_ind_party_w2", "findout_ind_party_w2", "talk_ind_party_w2",
+  trace_names
+))
+```
+
+Partisanship with imputation: uses PID to create a binary variable for partisanship. If PID is independent, then use respondents' ideology or support for Trump to impute partisanship. 
+
+    1. `party_w0` Partisanship (1 'Strong Democrat' - 7 'Strong Republican')
+    2. `ideo_w0` Ideology (0 - 'Extreme Left' - 10 'Extreme Right')
+    3. `approve_trump_w1` Trump support (1 'Strongly Disapprove' - 7 'Strongly Approve')
+
+```{r}
+# STUDY 1
+df1$party_imp = "missing"
+df1$party_imp[grepl("Democrat", df1$party_w0) == T] = "Democrat"
+df1$party_imp[grepl("Republican", df1$party_w0) == T] = "Republican"
+
+# impute using ideology
+df1$party_imp[df1$party_imp == "missing" & 
+          grepl(paste(c(0:4),collapse="|"), df1$ideo_w0) == T] = "Democrat"
+df1$party_imp[df1$party_imp == "missing" & 
+          grepl(paste(c(6:10),collapse="|"), df1$ideo_w0) == T] = "Republican"
+
+# impute using support for Trump
+df1$party_imp[df1$party_imp == "missing" & 
+          grepl("disapprove", df1$approve_trump_w1) == T] = "Democrat"
+df1$party_imp[df1$party_imp == "missing" & 
+          grepl(" approve", df1$approve_trump_w1) == T] = "Republican"
+df1$party_imp[df1$party_imp == "missing"] = "Democrat"
+
+# STUDY 2
+df2$party_imp = "missing"
+df2$party_imp[grepl("Democrat", df2$party_w0) == T] = "Democrat"
+df2$party_imp[grepl("Republican", df2$party_w0) == T] = "Republican"
+df2$party_imp[df2$party_imp == "missing"] = 
+  df2$embed_imputed_party_w2[which(df2$party_imp == "missing")]
+```
+
+
+## Dependent Variables
+
+> Attitude Polarization
+
+*Study 1:* Scale ranging between 1 'strongly disagree' and 7 'strongly agree', 
+with 4 being the neutral midpoint on which the scales were folded. 
+
+  1. `att_imm` undocumented immigrants
+    
+        - American identity is being threatened because there are too many 
+        undocumented immigrants in the US
+        - American norms and values are being threatened because of the 
+        presence of undocumented immigrants
+        - Undocumented immigrants are a threat to the American culture
+        - Because of the presence of undocumented immigrants, American 
+          people have more difficulties in finding a job
+        - Because of the presence of undocumented immigrants, American 
+          people have more  difficulties in finding a house
+          
+  2. `att_gun` gun control
+    
+        - Allow more law-abiding citizens to carry guns in public
+        - Better mental health screening and treatment
+        - Stricter gun laws
+        - Requiring individuals to be 21 years of age or older in order 
+        to purchase a gun
+        - Allowing trained school staff and teachers to carry guns
+          
+  3. `att_musl` muslims
+    
+        - To prevent terrorism, Muslims living in the US should be subject 
+        to more scrutiny than other religious people
+        - There is a great deal of support for extremism among Muslims 
+        living in the US
+        - Islamic religion is more likely than others to encourage violence 
+        among its believers
+        - Islam is not part of mainstream American society
+          
+  4. `att_assault` sexual assault
+    
+        - The laws in this country go too far in favoring any person who 
+        says they were raped
+        - There are many false accusations of rape in this country
+        - Women sometimes accuse men of rape just to get back at them
+        - Women sometimes accuse men of rape just for attention.
+
+```{r}
+# Correct Qualtrics errors and fold scales
+for (i in names(df1)[grepl("att", names(df1)) == T]){
+  
+  df1[,i] = recode(df1[,i], 
+      `0` = 1, 
+      `Strongly disagree` = 1,
+      `Disagree` = 2, 
+      `Somewhat disagree` = 3,
+      `Neither agree nor disagree` = 4, 
+      `Somewhat agree` = 5, 
+      `Agree` = 6,
+      `Strongly agree` = 7,
+      `8` = 7, 
+      `NA` = 4
+      )
+  
+  # fold scale 
+  df1[,paste0(i, "_fold")] = abs(df1[,i] - 4)
+}
+
+# Mean scale per dimension 
+for (i in c("immigrant", "gun", "musl", "assault")){
+  varnames = names(df1)[grepl(i, names(df1)) == T]
+  varnames = varnames[grepl("fold", varnames) == T]
+  
+  df1[,paste0("att_", i, "_w1_fold")] = 
+    rowMeans(select(df1, varnames[grepl("w1", varnames) == T]), na.rm = T)
+  df1[,paste0("att_", i, "_w2_fold")] = 
+    rowMeans(select(df1, varnames[grepl("w2", varnames) == T]), na.rm = T)
+}
+
+# Grand mean
+df1$att_extr_w1 = rowMeans(select(df1, 
+  paste0("att_", c("immigrant", "gun", "musl", "assault"), 
+         "_w1_fold")), na.rm = T)
+
+df1$att_extr_w2 = rowMeans(select(df1,
+  paste0("att_", c("immigrant", "gun", "musl", "assault"), 
+         "_w2_fold")), na.rm = T)
+```
+
+*Study 2:* Scale ranging between 1 'liberal' to 13 'conservative' viewpoints, with 7 being the neutral mid-point on which the scales were folded.
+
+  1. `att_econ` economy 
+  
+        - Government regulation of business is necessary to protect the public 
+        interest - Government regulation of business usually does more 
+        harm than good
+        - Government should raise taxes to increase public services - 
+        Government should cut public services to cut taxes
+        - Free trade has harmed the U.S. economy - Free trade has helped the 
+        U.S economy.
+          
+  2. `att_climate` climate change 
+  
+        - Stricter environmental laws and regulations are worth the cost - 
+        Stricter environmental laws and regulations cost too many jobs and 
+        hurt the economy
+        - There is solid evidence that global warming is caused by human 
+        activity:There is no solid evidence that global warming is caused 
+        by human activity
+        - To solve the nation’s energy problems, the US should emphasize 
+        the development of alternative energy, such as wind and solar power-
+        To solve the nation’s energy problems, the US should emphasize the 
+        production of oil, gas and coal supplies
+          
+  3. `att_gun` gun control
+  
+        - The federal government should make it more difficult to buy a 
+        gun than it is now - The federal government should make it easier 
+        to buy a gun than it is now
+        - Banning the sale of semi-automatic weapons will prevent mass 
+        shootings - Banning the sale of semi-automatic weapons will do 
+        nothing to prevent mass shootings
+        - Carrying a concealed gun should not be allowed anywhere - 
+        Carrying a concealed gun should be allowed everywhere
+          
+  4. `att_immigrant` immigration 
+  
+        - Immigrants today strengthen our country because of their hard 
+        work and talents - Immigrants today are a burden on our country 
+        because they take our jobs, housing, and healthcare
+        - Government should allow unauthorized immigrants to remain in the 
+        United States and eventually qualify for U.S. citizenship, without 
+        penalties - Government should make all unauthorized immigrants felons 
+        and send them back to their home country
+        - American identity, norms and values have been enriched thanks to 
+        the presence of immigrants - American identity, norms and values 
+        are being threatened because there are too many immigrants in the US.
+
+```{r}
+for (i in names(df2)[grepl("att", names(df2)) == T]){
+  
+  # correct Qualtrics errors
+  if (max(df2[,i], na.rm = T) > 13){df2[which(df2[,i] > 13), i] = 
+  df2[which(df2[,i] > 13), i] - 93}
+  
+  # fold scale
+  df2[,paste0(i, "_fold")] = abs(df2[,i] - 7)
+  }
+
+# Mean scale per dimension 
+for (i in c("econ", "climate", "gun", "immigrant")){
+  varnames = names(df2)[grepl(i, names(df2)) == T]
+  varnames = varnames[grepl("fold", varnames) == T]
+  
+  df2[,paste0("att_", i, "_w1_fold")] = 
+    rowMeans(select(df2, varnames[grepl("w1", varnames) == T]), na.rm = T)
+  df2[,paste0("att_", i, "_w2_fold")] = 
+    rowMeans(select(df2, varnames[grepl("w2", varnames) == T]), na.rm = T)
+}
+
+# Grand mean
+df2$att_extr_w1 = rowMeans(select(df2, paste0("att_", 
+    c("econ", "climate", "gun", "immigrant"), "_w1_fold")), na.rm = T)
+
+df2$att_extr_w2 = rowMeans(select(df2, paste0("att_", 
+    c("econ", "climate", "gun", "immigrant"), "_w2_fold")), na.rm = T)
+```
+
+> Affective Polarization 
+
+*Study 1:* 
+
+  1. `ap_ft` feeling thermometer out-partisans (0 'cold' - 100 'warm')
+  
+        - Feeling thermometer [out-partisans] 
+        
+  2. `ap_sd` social distance (1 'strongly disagree' - 7 'strongly agree')
+  
+        - Comfortable having [out-partisan] as neighbor on the same street 
+        - Comfortable having [out-partisan] as close personal friend 
+        - Comfortable having [out-partisan] as someone I closely have 
+        to work with at my job 
+        - Comfortable having [out-partisan] as a close relative by marriage 
+        
+  3. `ap_nt` negative traits (1 'strongly disagree' - 7 'strongly agree')
+  
+        - [out-partisans] are mean [for Democrats]
+        - [out-partisan] are hypocritical
+        
+```{r}
+# loop over waves
+for (wave in c("_w1", "_w2")){
+  
+  # generate empty variables
+  df1[,paste0("ap_ft", wave)] = -999
+  for (itemno in 1:2){df1[,paste0("ap_nt_", itemno, wave)] = -999}
+  for (itemno in 1:4){df1[,paste0("ap_sd_", itemno, wave)] = -999}
+  
+  # loop over partisanship
+  for (i in 1:2){
+    
+    party = c("Republican", "Democrat")[i]
+    out_party = c("dem", "rep")[i]
+    
+    # feeling thermometer
+    df1[df1$party_imp == party, paste0("ap_ft", wave)] = 100 - 
+      df1[df1$party_imp == party, paste0("ft_", out_party, "_supporters", wave)]
+    
+    # negative traits
+    for (itemno in 1:2){
+      df1[df1$party_imp == party, paste0("ap_nt_", itemno, wave)] =
+      df1[df1$party_imp == party, 
+          paste0("negtrait_", out_party, "_", itemno, wave)]
+    }
+    
+    # social distance
+    for (itemno in 1:4){
+      df1[df1$party_imp == party, paste0("ap_sd_", itemno, wave)] =
+      df1[df1$party_imp == party, 
+          paste0("socdis_", out_party, "_", itemno, wave)]
+    }
+    
+  } # end of partisanship loop
+  
+} # end of wave loop
+
+for (wave in c("_w1", "_w2")){
+  vars = c(paste0("ap_nt_1", wave), paste0("ap_nt_2", wave),
+    paste0(paste0("ap_sd_", c(1:4)), wave))
+  
+  for (i in 1:length(vars)){
+    var = vars[i]
+    df1[, var] = recode(df1[, var],
+                        `Strongly disagree` = 1, 
+                        `Disagree` = 2, 
+                        `Somewhat disagree` = 3, 
+                        `Neither agree nor disagree` = 4, 
+                        `Somewhat agree` = 5, 
+                        `Agree` = 6,
+                        `Strongly agree` = 7,
+                        `1 Very comfortable` = 1, 
+                        `2` = 2, 
+                        `3` = 3, 
+                        `4 Moderate` = 4, 
+                        `5` = 5, 
+                        `6` = 6,
+                        `7 Very uncomfortable` = 7
+                        )
+  }
+  
+  # collapse items into mean score
+  df1[, paste0("ap_nt", wave)] = 
+    rowMeans(select(df1, c(paste0("ap_nt_1", wave), paste0("ap_nt_2", wave))),
+             na.rm = T)
+  df1[, paste0("ap_sd", wave)] = 
+    rowMeans(select(df1, paste0(paste0("ap_sd_", c(1:4)), wave)),
+             na.rm = T)
+}
+```
+
+*Study 2:* 
+
+  1. `ap_ft` feeling thermometer out-partisans i(0 'cold' - 100 'warm')
+  
+  2. `ap_under` understanding of out-partisans i(1 'not at all' - 7 'very much')
+
+  3. `ap_stupid` out-partisans are stupid 
+  
+  4. `ap_sd` 
+  
+      - `talk_ind_lib_w1` `talk_ind_cons_w1` `talk_party_opp_w2`: 
+      Social distance: talk to out-partisans
+      - `findout_ind_rep_w1` `findout_ind_dem_w1` `findout_party_opp_w2`:
+      Social distance: find out about out-partisans 
+      - `spendtime_ind_rep_w1` `spendtime_dem_cons_w1` `spendtime_party_opp_w2`:	
+      Social distance: spend time with out-partisans
+      
+
+```{r}
+for (wave in c("_w1", "_w2")){
+  
+  # social distance 
+  df2[,paste0("ap_sd_1", wave)] = 7 - df2[, paste0("talk_party_opp", wave)]
+  df2[,paste0("ap_sd_2", wave)] = 7 - df2[, paste0("findout_party_opp", wave)]
+  df2[,paste0("ap_sd_3", wave)] = 7 - df2[, paste0("spendtime_party_opp", wave)]
+  
+  if (wave == "_w2"){
+    df2[is.na(df2$ap_sd_1_w2), "ap_sd_1_w2"] = 
+      7 - df2$talk_ind_party_w2[which(is.na(df2$ap_sd_1_w2))]
+    df2[is.na(df2$ap_sd_2_w2), "ap_sd_2_w2"] = 
+      7 - df2$findout_ind_party_w2[which(is.na(df2$ap_sd_2_w2))]
+    df2[is.na(df2$ap_sd_3_w2), "ap_sd_3_w2"] = 
+      7 - df2$talk_ind_party_w2[which(is.na(df2$ap_sd_3_w2))]
+  }
+  
+  # loop over partisanship
+  for (i in 1:2){
+    
+    party = c("Republican", "Democrat")[i]
+    out_party = c("dem", "rep")[i]
+    
+    # feeling thermometer
+    df2[df2$party_imp == party, paste0("ap_ft", wave)] = 100 - 
+      df2[df2$party_imp == party, paste0("ft_", out_party, "_supporters", wave)]
+    
+    # social distance for independents
+    if (wave == "_w1"){
+    df2[is.na(df2[,paste0("ap_sd_1", wave)]) & 
+        df2$party_imp == party, paste0("ap_sd_1", wave)] =
+      7 - df2[is.na(df2[,paste0("ap_sd_1", wave)]) &
+              df2$party_imp == party, paste0("talk_ind_", out_party, wave)]
+    
+    df2[is.na(df2[,paste0("ap_sd_2", wave)]) & 
+        df2$party_imp == party, paste0("ap_sd_2", wave)] =
+      7 - df2[is.na(df2[,paste0("ap_sd_2", wave)]) &
+              df2$party_imp == party, paste0("findout_ind_", out_party, wave)]
+    
+    df2[is.na(df2[,paste0("ap_sd_3", wave)]) & 
+        df2$party_imp == party, paste0("ap_sd_3", wave)] =
+      7 - df2[is.na(df2[,paste0("ap_sd_3", wave)]) &
+              df2$party_imp == party, paste0("spendtime_ind_", out_party, wave)]
+    }
+    
+  } # end of partisanship loop
+  
+  # understanding
+  df2[, paste0("ap_under", wave)] = 8 - 
+    df2[,paste0("understand_party_opp", wave)]
+  
+  # stupid
+  df2[, paste0("ap_stupid", wave)] = df2[,paste0("stupid_party_opp", wave)]
+
+  
+} # end of wave loop
+
+df2$ap_sd_w1 = 
+  rowMeans(cbind(df2$ap_sd_1_w1, df2$ap_sd_2_w1, df2$ap_sd_2_w1), na.rm = T)
+
+df2$ap_sd_w2 = 
+  rowMeans(cbind(df2$ap_sd_1_w2, df2$ap_sd_2_w2, df2$ap_sd_2_w2), na.rm = T)
+```
+
+Rescale dependent variables to range between 0 and 100
+```{r}
+dvs_s1 = c(
+  # attitude extremity
+  names(df1)[grepl("fold", names(df1))], 
+  names(df1)[grepl("att_extr_", names(df1))], 
+  
+  # affective polarization
+  names(df1)[grepl("ap_", names(df1))])
+
+dvs_s2 = c(
+  # attitude extremity
+  names(df2)[grepl("fold", names(df2))], 
+  names(df2)[grepl("att_extr_", names(df2))], 
+  
+  # affective polarization
+  names(df2)[grepl("ap_", names(df2))])
+
+for (i in dvs_s1){
+  df1[,paste0(i, "_r")] = df1[,i] - min(df1[,i], na.rm = T)
+  df1[,paste0(i, "_r")] = (df1[,paste0(i, "_r")]/max(df1[,i], na.rm = T))*100
+}
+
+for (i in dvs_s2){
+  df2[,paste0(i, "_r")] = df2[,i] - min(df2[,i], na.rm = T)
+  df2[,paste0(i, "_r")] = (df2[,paste0(i, "_r")]/max(df2[,i], na.rm = T))*100
+}
+```
+
+## Independent Variables
+
+> Partisanship strength
+
+```{r}
+df1$partisan = recode(df1$party_w0, 
+                      `Strong Republican` = 1, 
+                      `A not very strong Republican` = 2, 
+                      `Independent, lean toward Republican` = 3, 
+                      `Independent (lean toward neither party)` = 4, 
+                      `Independent, lean toward Democrat` = 5, 
+                      `A not very strong Democrat` = 6, 
+                      `A strong Democrat` = 7
+                      )
+
+df1$partisan = abs(as.numeric(df1$partisan) - 4)
+
+df2$party_w0_fac[is.na(df2$party_w0_fac)] = 
+  df2$party_w1[which(is.na(df2$party_w0_fac))]
+df2$party_w0_fac[is.na(df2$party_w0_fac)] = 
+  df2$party_w2[which(is.na(df2$party_w0_fac))]
+
+df2$partisan = recode(df2$party_w0, 
+                      `A strong Republican` = 1, `1` = 1,
+                      `A not very strong Republican` = 2, `2` = 2,
+                      `Independent, lean toward Republican` = 3, 
+                      `Independent (close to neither parity)` = 4, 
+                      `Independent, lean toward Democrat` = 5, `5` = 5,
+                      `A not very strong Democrat` = 6, `6` = 6,
+                      `A strong Democrat` = 7)
+
+df2$partisan = abs(as.numeric(df2$partisan) - 4)
+```
+
+> Partisan news exposure
+
+  1. `congenial` exposure to news of the same political aisle
+  2. `cross` exposure to news across the political aisle
+  
+```{r}
+for (wave in c("_w1", "_w2")){
+  
+  # loop over partisanship
+  for (level in c("domain_", "page_")){
+    
+    for (i in 1:2){
+      
+      party = c("Republican", "Democrat")[i]
+      congenial = c("right", "left")[i]
+      cross = c("left", "right")[i]
+      
+      # congenial news exposure
+      df1[df1$party_imp == party , paste0(level, "congenial_mean",  wave)] =
+        df1[df1$party_imp == party , paste0(level, congenial, "_mean", wave)]
+      df1[df1$party_imp == party , paste0(level, "congenial_perc",  wave)] =
+        df1[df1$party_imp == party , paste0(level, congenial, "_perc", wave)]
+      
+      df2[df2$party_imp == party , paste0(level, "congenial_mean",  wave)] =
+        df2[df2$party_imp == party , paste0(level, congenial, "_mean", wave)]
+      df2[df2$party_imp == party , paste0(level, "congenial_perc",  wave)] =
+        df2[df2$party_imp == party , paste0(level, congenial, "_perc", wave)]
+      
+      # cross-cutting news exposure 
+      df1[df1$party_imp == party , paste0(level, "cross_mean",  wave)] =
+        df1[df1$party_imp == party , paste0(level, cross, "_mean", wave)]
+      df1[df1$party_imp == party , paste0(level, "cross_perc",  wave)] =
+        df1[df1$party_imp == party , paste0(level, cross, "_perc", wave)]
+      
+      df2[df2$party_imp == party , paste0(level, "cross_mean",  wave)] =
+        df2[df2$party_imp == party , paste0(level, cross, "_mean", wave)]
+      df2[df2$party_imp == party , paste0(level, "cross_perc",  wave)] =
+        df2[df2$party_imp == party , paste0(level, cross, "_perc", wave)]
+    }}
+    
+} # end of partisanship loop
+```
+
+Take the natural logarithm and rescale from 0 to 100
+```{r}
+# STUDY 1
+for (i in names(df1)[grepl("domain|page", names(df1))]){
+  df1[,paste0(i, "_ln")] = df1[,i] + 1
+  df1[,paste0(i, "_ln")] = log(df1[,paste0(i, "_ln")])
+  df1[,paste0(i, "_ln")] = 
+    df1[,paste0(i, "_ln")] - min(df1[,paste0(i, "_ln")])
+  df1[,paste0(i, "_ln")] = 
+    (df1[,paste0(i, "_ln")] / max(df1[,paste0(i, "_ln")]))*100
+}
+
+# STUDY 2
+for (i in names(df2)[grepl("domain|page", names(df2))]){
+  df2[,paste0(i, "_ln")] = df2[,i] + 1
+  df2[,paste0(i, "_ln")] = log(df2[,paste0(i, "_ln")])
+  df2[,paste0(i, "_ln")] = 
+    df2[,paste0(i, "_ln")] - min(df2[,paste0(i, "_ln")])
+  df2[,paste0(i, "_ln")] = 
+    (df2[,paste0(i, "_ln")] / max(df2[,paste0(i, "_ln")]))*100
+  
+}
+```
+
+```{r}
+
+```
+
+## Store data
+
+Make sure wave label is located at the end and that W0 doesn't have a suffix
+```{r}
+# remove suffix W0 
+names(df1)[grepl('_w0', names(df1))] = 
+  gsub("_w0", "", names(df1)[grepl('_w0', names(df1))])
+names(df2)[grepl('_w0', names(df2))] = 
+  gsub("_w0", "", names(df2)[grepl('_w0', names(df2))])
+
+# make sure suffix is located at the end of variable label
+names(df1)[grepl('_w1', names(df1))] = 
+  paste0(gsub("_w1", "", names(df1)[grepl('_w1', names(df1))]), "_w1")
+names(df2)[grepl('_w1', names(df2))] = 
+  paste0(gsub("_w1", "", names(df2)[grepl('_w1', names(df2))]), "_w1")
+
+names(df1)[grepl('_w2', names(df1))] = 
+  paste0(gsub("_w2", "", names(df1)[grepl('_w2', names(df1))]), "_w2")
+names(df2)[grepl('_w2', names(df2))] = 
+  paste0(gsub("_w2", "", names(df2)[grepl('_w2', names(df2))]), "_w2")
+```
+
+Reshape data into long dataset
+```{r}
+library(panelr)
+
+df1_long = long_panel(df1, prefix = "_w", 
+                      begin = 1, end = 2, label_location = "end")
+df2_long = long_panel(df2, prefix = "_w", 
+                      begin = 1, end = 2, label_location = "end")
+```
+
+Save data
+```{r}
+write.csv(df1, paste0(datadir, "s1_survey_wide.csv"))
+write.csv(df2, paste0(datadir, "s2_survey_wide.csv"))
+write.csv(df1_long, paste0(datadir, "s1_survey_long.csv"))
+write.csv(df2_long, paste0(datadir, "s2_survey_long.csv"))
+```
+
+

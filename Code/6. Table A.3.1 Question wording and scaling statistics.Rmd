@@ -1,0 +1,83 @@
+---
+title: "6. Table A.3.1 Table scaling statistics"
+---
+
+```{r}
+source('helpers.R')
+
+df1 = read.csv(paste0(datadir, 's1_survey_long.csv'))
+df2 = read.csv(paste0(datadir, 's2_survey_long.csv'))
+
+df1$ft = df1$ft_dem_supporters
+df1$ft[df1$party_imp == "Democrat"] = 
+  df1$ft_rep_supporters[which(df1$party_imp == "Democrat")]
+
+df2$ft = df2$ft_dem_supporters
+df2$ft[df2$party_imp == "Democrat"] = 
+  df2$ft_rep_supporters[which(df2$party_imp == "Democrat")]
+
+cor(cbind(df1$ft, df1$ap_ft_r), use = "complete.obs")
+
+sum = function(x){x = select(describe(x), c("mean", "sd")); return(x)}
+```
+
+```{r}
+sumstat = function(varname, study){
+  
+  if (study == 1){df = df1}else{df = df2}
+  
+  emptyrow = data.frame(
+    variable = varname,
+    study = paste0("Study ", study)
+  )
+  
+  varnames = names(df)[grepl(varname, names(df))]
+  varnames = varnames[grepl("_[1-9]$", varnames)]
+  
+  if(length(varnames) > 1){
+    df[, varname] = 
+      rowMeans(select(df, varnames), na.rm = T)
+  }
+  
+  emptyrow = cbind(emptyrow,
+                   select(describe(df[,varname]), c("mean", "sd")))
+  
+  if(length(varnames) > 1){
+    emptyrow$alph = (alpha(select(df, varnames)))$total$raw_alpha
+  } else {
+    emptyrow$alph = NA
+  }
+  
+  for (col in c("mean", "sd", "alph")){
+    emptyrow[,col] = sprintf("%.2f", emptyrow[,col])
+  }
+  
+  return(emptyrow)
+}
+```
+
+```{r}
+varsum = list()
+
+vars = c("partisan", "ft", "ap_nt", "ap_sd",
+         "att_immigrant", "att_gun", "att_musl",
+         "att_assault", "att_econ", "att_climate")
+
+for (var in vars){
+  print(var)
+  if(grepl(var, paste(names(df1), collapse = " ; "))){
+    varsum[[length(varsum) + 1]] = sumstat(var, 1)
+  }
+  
+  if (grepl(var, paste(names(df2), collapse = " ; "))){
+    varsum[[length(varsum) + 1]] = sumstat(var, 2)
+  }
+}
+
+varsum = do.call(rbind, varsum)
+
+write_xlsx(varsum, paste0(tabdir, 
+                          "Table A.3.1. Table Scaling Statistics.xlsx"))
+```
+
+

@@ -1,0 +1,116 @@
+---
+title: "6. Figure A.1.1. Distribution survey composition"
+---
+
+Melt datasets
+```{r}
+source('helpers.R')
+df1 = select(
+  subset(read.csv(paste0(datadir, 's1_survey_wide.csv')), !is.na(ap_ft_w2)),
+  c("gender", "edu", "age", "ethn"))
+df2 = subset(read.csv(paste0(datadir, 's2_survey_wide.csv')), !is.na(ap_ft_w2),
+  c("gender_fac", "edu_fac", "age", "ethn_fac"))
+
+# Gender
+df1$gender = recode(df1$gender, `Female` = 2, `Male` = 1)
+df2$gender_fac = recode(df2$gender_fac, `Female` = 2, `Male` = 1)
+
+# Educational Attainment 
+df1$edu = recode(df1$edu, 
+                 `Less than high school` = 1,
+                 `High school` = 2,
+                 `Some college` = 3,
+                 `2 year college degree (Associates Degree)` = 3,
+                 `4 year college degree (BA, BS)` = 3,
+                 `Some graduate school` = 4,
+                 `Graduate degree` = 4)
+
+df2$edu_fac = recode(df2$edu_fac,
+                 `Associate Degree` = 3, 
+                 `College Degree (such as B.A., B.S.)` = 3, 
+                 `High school graduate` = 2, 
+                 `Master's degree` = 3, 
+                 `Completed some college, but no degree` = 3, 
+                 `Completed some graduate, but no degree` = 4, 
+                 `Doctorate degree` = 4, 
+                 `Other post-high school vocational training` = 3, 
+                 `Middle School - Grades 4-8` = 1, 
+                 `Completed some high school` = 1)
+  
+# Ethnicity 
+df1$ethn = recode(df1$ethn,
+                  `Non-Hispanic White` = 1, 
+                  `Black or African American` = 2,
+                  `Asian or Asian American` = 3,
+                  `Hispanic or Latino` = 4,
+                  `American Indian or Alaska Native` = 4,
+                  `Prefer not to respond` = 4 )
+
+df2$ethn_fac = recode(df2$ethn_fac,
+                   `White` = 1, 
+                   `Native American` = 4, 
+                   `Prefer to self-describe` = 4, 
+                   `Black` = 2, 
+                   `Asian` = 3)
+
+# Age 
+df1$age = recode(df1$age,
+                 `18-24` = 1, `25-29` = 1, `30-34` = 1,
+                 `35-39` = 2, `40-44` = 2, `45-49` = 3,
+                 `50-54` = 3, `55-59` = 3, `60-64` = 4, 
+                 `65+` = 4)
+
+df2$age = case_when(
+                 df2$age %in% 0:34 ~ 1,
+                 df2$age %in% 35:44 ~ 2, 
+                 df2$age %in% 45:59 ~ 3,
+                 df2$age %in% 60:120 ~ 4)
+
+# Melt data 
+df1 = melt(df1)
+df2 = melt(df2)
+
+# Rename variables 
+df1$variable = recode(df1$variable, 
+                      `gender` = "Gender",
+                      `edu` = "Education", 
+                      `age` = "Age", 
+                      `ethn` = "Ethnicity")
+
+df2$variable = recode(df2$variable, 
+                      `gender_fac` = "Gender",
+                      `edu_fac` = "Education", 
+                      `age` = "Age", 
+                      `ethn_fac` = "Ethnicity")
+
+# Order data
+df1 = df1[order(df1$variable),]
+df2 = df2[order(df2$variable),]
+```
+
+```{r}
+ridgeme = function(data){
+  p = ggplot(data, aes(x = value, y = 0, fill = variable)) + 
+  geom_density_ridges(stat="binline", bins = 4) + 
+  scale_fill_grey() + 
+  facet_wrap(variable~ ., nrow = 4) + 
+  scale_x_continuous(breaks = c(1:4)) + 
+  theme_minimal() + 
+  theme(legend.position = 'None', 
+        axis.title = element_blank(), axis.text.y = element_blank(), 
+        panel.grid.minor = element_blank())
+  return(p)
+}
+
+ridgeme(df1)
+ggsave(
+  paste0(figdir, "Figure A.1.1. Distributions survey composition Study 1.png"), 
+  height = 7, width = 7)
+
+ridgeme(df2)
+ggsave(
+  paste0(figdir, "Figure A.1.1. Distributions survey composition Study 2.png"), 
+  height = 7, width = 7)
+```
+
+

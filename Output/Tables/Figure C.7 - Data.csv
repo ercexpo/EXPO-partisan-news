@@ -1,0 +1,385 @@
+"","variable","est","se","t","p","dv","level","stat","model","formula","data","lb","ub","party","print"
+"1","7. Centrist News",-0.0367101312938314,0.0598638942145894,-0.613226582992404,0.540354276591213,"Attitude Extremity","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 1",-0.175974374331747,0.102554111744085,"Democrat","(B=-0.037; SE=0.06; CI95%=[-0.176,0.103])"
+"2","8. Liberal News",0.0919089840770962,0.0804329227956435,1.142678655488,0.254402873977307,"Attitude Extremity","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 1",-0.0952059748714401,0.279023943025632,"Democrat","(B=0.092; SE=0.08; CI95%=[-0.095,0.279])"
+"3","6. Conservative News",-0.197908014542147,0.124687321831796,-1.58723446485703,0.113882805087635,"Attitude Extremity","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 1",-0.487974100605392,0.0921580715210973,"Democrat","(B=-0.198; SE=0.125; CI95%=[-0.488,0.092])"
+"4","7. Centrist News",-0.198780376160894,0.147148210303296,-1.35088544910724,0.180793683912714,"Attitude Extremity","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 1",-0.541098302368883,0.143537550047094,"Republican","(B=-0.199; SE=0.147; CI95%=[-0.541,0.144])"
+"5","8. Liberal News",0.505474403553594,0.446710685901911,1.13154759782171,0.261429802923121,"Attitude Extremity","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 1",-0.533730050905642,1.54467885801283,"Republican","(B=0.505; SE=0.447; CI95%=[-0.534,1.545])"
+"6","6. Conservative News",-0.369049533998702,0.221166635435841,-1.66864922130518,0.0993566859746872,"Attitude Extremity","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 1",-0.883560066153636,0.145460998156232,"Republican","(B=-0.369; SE=0.221; CI95%=[-0.884,0.145])"
+"7","7. Centrist News",0.00942275346910275,0.0452984005482901,0.208015147445608,0.835292768959011,"Attitude Extremity","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 2",-0.0959570843438623,0.114802591282068,"Democrat","(B=0.009; SE=0.045; CI95%=[-0.096,0.115])"
+"8","8. Liberal News",0.100354529182587,0.0719858452205591,1.39408697466992,0.163844225374782,"Attitude Extremity","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 2",-0.0671095888072942,0.267818647172467,"Democrat","(B=0.1; SE=0.072; CI95%=[-0.067,0.268])"
+"9","6. Conservative News",-0.0113652620919395,0.0330731637928909,-0.343640002604845,0.731246017119477,"Attitude Extremity","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 2",-0.0883049463693358,0.0655744221854568,"Democrat","(B=-0.011; SE=0.033; CI95%=[-0.088,0.066])"
+"10","7. Centrist News",-0.0161800617383355,0.0712446345141133,-0.227105688009815,0.820480503192527,"Attitude Extremity","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 2",-0.18191986577706,0.149559742300389,"Republican","(B=-0.016; SE=0.071; CI95%=[-0.182,0.15])"
+"11","8. Liberal News",0.0421264379731743,0.142340883880809,0.29595459030906,0.767448680519101,"Attitude Extremity","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 2",-0.28900797463204,0.373260850578388,"Republican","(B=0.042; SE=0.142; CI95%=[-0.289,0.373])"
+"12","6. Conservative News",-0.0413697264166822,0.0443061741685937,-0.93372373473869,0.351120936133625,"Attitude Extremity","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 2",-0.144441300500673,0.061701847667309,"Republican","(B=-0.041; SE=0.044; CI95%=[-0.144,0.062])"
+"13","5. Congenial News",0.0667398807338343,0.07112080798523,0.938401610224879,0.349053312316958,"Attitude Extremity","News Domains","Mean","Model 2
+Congenial vs. Cross-Cutting News","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln","Study 1",-0.0987118597226724,0.232191621190341,"Democrat","(B=0.067; SE=0.071; CI95%=[-0.099,0.232])"
+"14","4. Cross-Cutting News",-0.154712513373801,0.0564307206643772,-2.74163632064806,0.00660942838747074,"Attitude Extremity","News Domains","Mean","Model 2
+Congenial vs. Cross-Cutting News","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln","Study 1",-0.285990000421968,-0.023435026325635,"Democrat","(B=-0.155; SE=0.056; CI95%=[-0.286,-0.023])"
+"15","5. Congenial News",-0.188977464676543,0.248500195979331,-0.7604720951297,0.449325332982582,"Attitude Extremity","News Domains","Mean","Model 2
+Congenial vs. Cross-Cutting News","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln","Study 1",-0.767075367291791,0.389120437938706,"Republican","(B=-0.189; SE=0.249; CI95%=[-0.767,0.389])"
+"16","4. Cross-Cutting News",-0.417647878046162,0.190736115930645,-2.18966332625765,0.0316172937304507,"Attitude Extremity","News Domains","Mean","Model 2
+Congenial vs. Cross-Cutting News","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln","Study 1",-0.861366435844225,0.0260706797519018,"Republican","(B=-0.418; SE=0.191; CI95%=[-0.861,0.026])"
+"17","5. Congenial News",0.10791808048553,0.0621560063358549,1.73624540647614,0.0830694453803952,"Attitude Extremity","News Domains","Mean","Model 2
+Congenial vs. Cross-Cutting News","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln","Study 2",-0.0366784127127549,0.252514573683815,"Democrat","(B=0.108; SE=0.062; CI95%=[-0.037,0.253])"
+"18","4. Cross-Cutting News",-0.00985461310252914,0.0309710298861544,-0.318188098321349,0.750460671930935,"Attitude Extremity","News Domains","Mean","Model 2
+Congenial vs. Cross-Cutting News","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln","Study 2",-0.0819040026350397,0.0621947764299815,"Democrat","(B=-0.01; SE=0.031; CI95%=[-0.082,0.062])"
+"19","5. Congenial News",-0.0495300355985602,0.0520559389475353,-0.951477134020753,0.342048183332732,"Attitude Extremity","News Domains","Mean","Model 2
+Congenial vs. Cross-Cutting News","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln","Study 2",-0.170630258500359,0.0715701873032384,"Republican","(B=-0.05; SE=0.052; CI95%=[-0.171,0.072])"
+"20","4. Cross-Cutting News",0.031449404061917,0.0747286603536869,0.420847957304047,0.674135965007189,"Attitude Extremity","News Domains","Mean","Model 2
+Congenial vs. Cross-Cutting News","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln","Study 2",-0.142395456081802,0.205294264205637,"Republican","(B=0.031; SE=0.075; CI95%=[-0.142,0.205])"
+"21","0. Intercept",64.6342071924141,2.3106997339275,27.9717032219306,1.49420771180666e-74,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",59.2587157788451,70.009698605983,"Democrat","(B=64.634; SE=2.311; CI95%=[59.259,70.01])"
+"22","5. Congenial News",0.0826781184967943,0.12290480665474,0.672700447990217,0.501843832189689,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",-0.20324121717386,0.368597454167448,"Democrat","(B=0.083; SE=0.123; CI95%=[-0.203,0.369])"
+"23","4. Cross-Cutting News",-0.0408763560686832,0.105867168383246,-0.386109845884498,0.699788453674901,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",-0.28716021816777,0.205407506030404,"Democrat","(B=-0.041; SE=0.106; CI95%=[-0.287,0.205])"
+"24","3. Partisanship Strength",3.74403139727331,1.11457573522756,3.35915387257996,0.000920744560185293,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",1.15114050516917,6.33692228937745,"Democrat","(B=3.744; SE=1.115; CI95%=[1.151,6.337])"
+"25","2. Congenial × Partisan",-0.02240018464503,0.0613044692710415,-0.365392359013721,0.715169599131716,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",-0.165015706402919,0.120215337112859,"Democrat","(B=-0.022; SE=0.061; CI95%=[-0.165,0.12])"
+"26","1. Cross-Cutting × Partisan",-0.0253388393013354,0.055795136525593,-0.454140645210405,0.65017531672489,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",-0.155137736539467,0.104460057936796,"Democrat","(B=-0.025; SE=0.056; CI95%=[-0.155,0.104])"
+"27","0. Wave",-1.78932085455607,0.591835317690544,-3.02334247563723,0.00279673056553429,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",-3.16613568764776,-0.412506021464391,"Democrat","(B=-1.789; SE=0.592; CI95%=[-3.166,-0.413])"
+"28","0. Intercept",55.5940735457763,3.72983046069424,14.90525484513,5.50984826174123e-24,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",46.9171903830075,64.2709567085452,"Republican","(B=55.594; SE=3.73; CI95%=[46.917,64.271])"
+"29","5. Congenial News",-0.857087801171609,0.556023682598809,-1.54145916441122,0.127529038159171,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",-2.15059231310171,0.436416710758488,"Republican","(B=-0.857; SE=0.556; CI95%=[-2.151,0.436])"
+"30","4. Cross-Cutting News",-0.0296015920173556,0.332773665946364,-0.0889541302289429,0.929361958617998,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",-0.803748902328457,0.744545718293746,"Republican","(B=-0.03; SE=0.333; CI95%=[-0.804,0.745])"
+"31","3. Partisanship Strength",-1.11910975980073,2.02756893990941,-0.551946588731398,0.582648056568073,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",-5.83594045263022,3.59772093302875,"Republican","(B=-1.119; SE=2.028; CI95%=[-5.836,3.598])"
+"32","2. Congenial × Partisan",0.418747561498426,0.311501202873312,1.34428874635432,0.183017727699544,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",-0.305912599567068,1.14340772256392,"Republican","(B=0.419; SE=0.312; CI95%=[-0.306,1.143])"
+"33","1. Cross-Cutting × Partisan",-0.134015112820476,0.212978548239844,-0.62924230598828,0.531154740940325,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",-0.629477305734542,0.36144708009359,"Republican","(B=-0.134; SE=0.213; CI95%=[-0.629,0.361])"
+"34","0. Wave",-3.3580720832683,1.43347486394707,-2.34260967368613,0.0218783342801705,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",-6.69283328550254,-0.0233108810340648,"Republican","(B=-3.358; SE=1.433; CI95%=[-6.693,-0.023])"
+"35","0. Intercept",51.6731740026176,1.65500123498226,31.2224383344169,1.26486748299922e-124,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",47.8230653980816,55.5232826071535,"Democrat","(B=51.673; SE=1.655; CI95%=[47.823,55.523])"
+"36","5. Congenial News",0.0880172746977562,0.143946389462749,0.61145871755633,0.541144963927661,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",-0.246852102404764,0.422886651800276,"Democrat","(B=0.088; SE=0.144; CI95%=[-0.247,0.423])"
+"37","4. Cross-Cutting News",0.0531067928337003,0.0694521153104283,0.764653352836414,0.444801236062694,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",-0.108462987966354,0.214676573633755,"Democrat","(B=0.053; SE=0.069; CI95%=[-0.108,0.215])"
+"38","3. Partisanship Strength",6.0317239475575,0.729768789116027,8.26525337547493,1.01829901247263e-15,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",4.33402787645607,7.72942001865892,"Democrat","(B=6.032; SE=0.73; CI95%=[4.334,7.729])"
+"39","2. Congenial × Partisan",0.00894325871795484,0.06659840178573,0.13428638643204,0.89322453782901,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",-0.145987791690796,0.163874309126706,"Democrat","(B=0.009; SE=0.067; CI95%=[-0.146,0.164])"
+"40","1. Cross-Cutting × Partisan",-0.0268474591730064,0.0307281521961541,-0.873708871318549,0.382652670034909,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",-0.098331830707733,0.0446369123617202,"Democrat","(B=-0.027; SE=0.031; CI95%=[-0.098,0.045])"
+"41","0. Wave",-0.431368633883105,0.440728035690942,-0.978763770284857,0.328120862756896,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",-1.45665536274292,0.593918094976713,"Democrat","(B=-0.431; SE=0.441; CI95%=[-1.457,0.594])"
+"42","0. Intercept",47.8848683542691,1.94539590393334,24.6144593280228,6.06494374285366e-77,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",43.3592007289861,52.4105359795522,"Republican","(B=47.885; SE=1.945; CI95%=[43.359,52.411])"
+"43","5. Congenial News",-0.0881729179496782,0.0991652582139558,-0.88915129691327,0.374565556101724,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",-0.318865805574425,0.142519969675069,"Republican","(B=-0.088; SE=0.099; CI95%=[-0.319,0.143])"
+"44","4. Cross-Cutting News",-0.166332072514944,0.14648889755663,-1.13545855890302,0.25700226604643,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",-0.507116207916397,0.17445206288651,"Republican","(B=-0.166; SE=0.146; CI95%=[-0.507,0.174])"
+"45","3. Partisanship Strength",4.30663179595167,0.910134602680266,4.7318624995347,3.29339325346508e-06,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",2.18934209791543,6.42392149398791,"Republican","(B=4.307; SE=0.91; CI95%=[2.189,6.424])"
+"46","2. Congenial × Partisan",0.0466398172046671,0.0482569987973235,0.9664881440421,0.334503470873845,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",-0.0656227493550779,0.158902383764412,"Republican","(B=0.047; SE=0.048; CI95%=[-0.066,0.159])"
+"47","1. Cross-Cutting × Partisan",0.102835453888428,0.0727217774081257,1.41409434083686,0.158271253166243,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",-0.0663406983814364,0.272011606158293,"Republican","(B=0.103; SE=0.073; CI95%=[-0.066,0.272])"
+"48","0. Wave",-1.19517662220588,0.664576414393917,-1.79840360915587,0.0730213317394008,"Attitude Extremity","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",-2.74121255096886,0.350859306557089,"Republican","(B=-1.195; SE=0.665; CI95%=[-2.741,0.351])"
+"49","7. Centrist News",-0.110674048465125,0.0608789476305232,-1.81793629444468,0.0704217307586271,"Attitude Extremity","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 1",-0.252299658859236,0.0309515619289864,"Democrat","(B=-0.111; SE=0.061; CI95%=[-0.252,0.031])"
+"50","8. Liberal News",0.0882030908669878,0.0854658664244438,1.03202710692653,0.303182410242264,"Attitude Extremity","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 1",-0.110620245792576,0.287026427526551,"Democrat","(B=0.088; SE=0.085; CI95%=[-0.111,0.287])"
+"51","6. Conservative News",-0.0260494954417057,0.10524608829917,-0.247510343260057,0.804742049127978,"Attitude Extremity","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 1",-0.270888509207594,0.218789518324182,"Democrat","(B=-0.026; SE=0.105; CI95%=[-0.271,0.219])"
+"52","7. Centrist News",-0.229929657830206,0.188061489900351,-1.22263020436582,0.225297606267626,"Attitude Extremity","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 1",-0.66742610504884,0.207566789388428,"Republican","(B=-0.23; SE=0.188; CI95%=[-0.667,0.208])"
+"53","8. Liberal News",0.480078311739362,0.4978292635498,0.964343293755245,0.337972994909726,"Attitude Extremity","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 1",-0.678045737155033,1.63820236063376,"Republican","(B=0.48; SE=0.498; CI95%=[-0.678,1.638])"
+"54","6. Conservative News",0.0402538051046151,0.339933772572135,0.11841661038864,0.906054150480554,"Attitude Extremity","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 1",-0.750550404033254,0.831058014242484,"Republican","(B=0.04; SE=0.34; CI95%=[-0.751,0.831])"
+"55","7. Centrist News",0.018016231251851,0.0409469866724428,0.439989183965419,0.660114701946123,"Attitude Extremity","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 2",-0.0772407041419649,0.113273166645667,"Democrat","(B=0.018; SE=0.041; CI95%=[-0.077,0.113])"
+"56","8. Liberal News",0.0762585920145596,0.0772330415195161,0.987382997150122,0.323881332701992,"Attitude Extremity","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 2",-0.103412329930075,0.255929513959194,"Democrat","(B=0.076; SE=0.077; CI95%=[-0.103,0.256])"
+"57","6. Conservative News",-0.0158862208690769,0.0381296856741573,-0.416636554647602,0.67710391363129,"Attitude Extremity","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 2",-0.104589134074998,0.0728166923368444,"Democrat","(B=-0.016; SE=0.038; CI95%=[-0.105,0.073])"
+"58","7. Centrist News",0.0406706719515663,0.0567540469261101,0.71661272022622,0.47411387296482,"Attitude Extremity","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 2",-0.0913589844582041,0.172700328361337,"Republican","(B=0.041; SE=0.057; CI95%=[-0.091,0.173])"
+"59","8. Liberal News",-0.0593953546522837,0.157603907806509,-0.376864733108037,0.706513447268555,"Attitude Extremity","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 2",-0.426036870518485,0.307246161213917,"Republican","(B=-0.059; SE=0.158; CI95%=[-0.426,0.307])"
+"60","6. Conservative News",-0.0627634845932369,0.0498391157413845,-1.259321792925,0.208793473730936,"Attitude Extremity","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","att_extr_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 2",-0.178706605542282,0.0531796363558085,"Republican","(B=-0.063; SE=0.05; CI95%=[-0.179,0.053])"
+"61","5. Congenial News",0.0626434704806275,0.0790207581537957,0.792747019190913,0.428767808300667,"Attitude Extremity","Political News","Mean","Model 2
+Congenial vs. Cross-Cutting News","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln","Study 1",-0.12118630225555,0.246473243216805,"Democrat","(B=0.063; SE=0.079; CI95%=[-0.121,0.246])"
+"62","4. Cross-Cutting News",-0.117903312467871,0.0493558726399269,-2.38884060115861,0.0177346458668565,"Attitude Extremity","Political News","Mean","Model 2
+Congenial vs. Cross-Cutting News","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln","Study 1",-0.232722241855195,-0.00308438308054637,"Democrat","(B=-0.118; SE=0.049; CI95%=[-0.233,-0.003])"
+"63","5. Congenial News",0.3539179734526,0.367707416097889,0.962498872631881,0.338851537279345,"Attitude Extremity","Political News","Mean","Model 2
+Congenial vs. Cross-Cutting News","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln","Study 1",-0.501497392255774,1.20933333916097,"Republican","(B=0.354; SE=0.368; CI95%=[-0.501,1.209])"
+"64","4. Cross-Cutting News",-0.351281961243014,0.183828460607213,-1.91092260731922,0.0597858072193732,"Attitude Extremity","Political News","Mean","Model 2
+Congenial vs. Cross-Cutting News","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln","Study 1",-0.778930909764804,0.0763669872787764,"Republican","(B=-0.351; SE=0.184; CI95%=[-0.779,0.076])"
+"65","5. Congenial News",0.0868700687602072,0.073318118978849,1.18483766318756,0.236583325659759,"Attitude Extremity","Political News","Mean","Model 2
+Congenial vs. Cross-Cutting News","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln","Study 2",-0.0836933814549116,0.257433518975326,"Democrat","(B=0.087; SE=0.073; CI95%=[-0.084,0.257])"
+"66","4. Cross-Cutting News",-0.00847769736518654,0.0341858663461233,-0.247988372719649,0.804234145881173,"Attitude Extremity","Political News","Mean","Model 2
+Congenial vs. Cross-Cutting News","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln","Study 2",-0.0880059148617348,0.0710505201313617,"Democrat","(B=-0.008; SE=0.034; CI95%=[-0.088,0.071])"
+"67","5. Congenial News",-0.0564346546822681,0.0560330185830187,-1.00716784691252,0.314581035084537,"Attitude Extremity","Political News","Mean","Model 2
+Congenial vs. Cross-Cutting News","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln","Study 2",-0.186786948338965,0.0739176389744284,"Republican","(B=-0.056; SE=0.056; CI95%=[-0.187,0.074])"
+"68","4. Cross-Cutting News",0.00763162991942389,0.0964396684545715,0.0791337220639535,0.936973509429438,"Attitude Extremity","Political News","Mean","Model 2
+Congenial vs. Cross-Cutting News","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln","Study 2",-0.216720587763072,0.23198384760192,"Republican","(B=0.008; SE=0.096; CI95%=[-0.217,0.232])"
+"69","0. Intercept",64.6546305647726,2.32366234469427,27.824451651679,3.71084176677578e-74,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",59.2489836092044,70.0602775203409,"Democrat","(B=64.655; SE=2.324; CI95%=[59.249,70.06])"
+"70","5. Congenial News",0.0493983606946139,0.130234020776513,0.379304581092397,0.704827548065814,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",-0.253571276666619,0.352367998055847,"Democrat","(B=0.049; SE=0.13; CI95%=[-0.254,0.352])"
+"71","4. Cross-Cutting News",-0.0562613252707904,0.093128451772664,-0.604126066737693,0.54638229742704,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",-0.272910501064842,0.160387850523261,"Democrat","(B=-0.056; SE=0.093; CI95%=[-0.273,0.16])"
+"72","3. Partisanship Strength",3.78233267152215,1.10723804308111,3.41600678838407,0.000756157494215095,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",1.20651180394328,6.35815353910102,"Democrat","(B=3.782; SE=1.107; CI95%=[1.207,6.358])"
+"73","2. Congenial × Partisan",-0.0127880272778067,0.0696906167149515,-0.183497117411262,0.854576986792971,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",-0.174912645313229,0.149336590757616,"Democrat","(B=-0.013; SE=0.07; CI95%=[-0.175,0.149])"
+"74","1. Cross-Cutting × Partisan",-0.00182376829914582,0.0430022408336513,-0.0424110061194448,0.966209520655854,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",-0.101861939841503,0.0982144032432111,"Democrat","(B=-0.002; SE=0.043; CI95%=[-0.102,0.098])"
+"75","0. Wave",-1.90577035031971,0.574875379786266,-3.31510170261293,0.00107137287052266,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",-3.24313046792391,-0.568410232715506,"Democrat","(B=-1.906; SE=0.575; CI95%=[-3.243,-0.568])"
+"76","0. Intercept",56.4296974228382,3.69946059332488,15.2534933132298,1.50941434180928e-24,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",47.823465136459,65.0359297092174,"Republican","(B=56.43; SE=3.699; CI95%=[47.823,65.036])"
+"77","5. Congenial News",-0.820641700941408,0.722767713489944,-1.13541555000966,0.259915391903166,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",-2.5020508346441,0.860767432761283,"Republican","(B=-0.821; SE=0.723; CI95%=[-2.502,0.861])"
+"78","4. Cross-Cutting News",0.185276713200238,0.337336311263805,0.549234419817163,0.584520812440488,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",-0.599484897345094,0.970038323745569,"Republican","(B=0.185; SE=0.337; CI95%=[-0.599,0.97])"
+"79","3. Partisanship Strength",-1.29590083229894,2.01639807844112,-0.642681049022226,0.522417409912331,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",-5.98674421530049,3.3949425507026,"Republican","(B=-1.296; SE=2.016; CI95%=[-5.987,3.395])"
+"80","2. Congenial × Partisan",0.627102534612023,0.361207445774031,1.73612848225819,0.0867600119415319,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",-0.213191638952115,1.46739670817616,"Republican","(B=0.627; SE=0.361; CI95%=[-0.213,1.467])"
+"81","1. Cross-Cutting × Partisan",-0.204614499999584,0.183765523252983,-1.11345423438269,0.269166302573422,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",-0.632117034341163,0.222888034341995,"Republican","(B=-0.205; SE=0.184; CI95%=[-0.632,0.223])"
+"82","0. Wave",-3.8521284249165,1.38272413705344,-2.78589801225667,0.00679708655225153,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",-7.06882578153574,-0.635431068297272,"Republican","(B=-3.852; SE=1.383; CI95%=[-7.069,-0.635])"
+"83","0. Intercept",52.1998571567545,1.63438729120175,31.9384869411047,3.72523449360334e-128,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",48.3977037565079,56.002010557001,"Democrat","(B=52.2; SE=1.634; CI95%=[48.398,56.002])"
+"84","5. Congenial News",-0.0435009385217331,0.191805778205067,-0.226796809401772,0.820664805452821,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",-0.48970790287784,0.402706025834374,"Democrat","(B=-0.044; SE=0.192; CI95%=[-0.49,0.403])"
+"85","4. Cross-Cutting News",0.0334524149188286,0.0784625392210139,0.426348869803966,0.670018074809691,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",-0.149078746389823,0.21598357622748,"Democrat","(B=0.033; SE=0.078; CI95%=[-0.149,0.216])"
+"86","3. Partisanship Strength",6.00703677065134,0.730827441983026,8.21950083641065,1.43214823485455e-15,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",4.30687790470342,7.70719563659925,"Democrat","(B=6.007; SE=0.731; CI95%=[4.307,7.707])"
+"87","2. Congenial × Partisan",0.0623808057270222,0.0861100131217671,0.724431497168747,0.469104499443783,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",-0.13794104023243,0.262702651686474,"Democrat","(B=0.062; SE=0.086; CI95%=[-0.138,0.263])"
+"88","1. Cross-Cutting × Partisan",-0.016159155496601,0.0346927100382918,-0.46577956806388,0.641555040480807,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",-0.0968664677388966,0.0645481567456945,"Democrat","(B=-0.016; SE=0.035; CI95%=[-0.097,0.065])"
+"89","0. Wave",-0.504274496146602,0.437161258956168,-1.15352055063315,0.249190636283665,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",-1.5212636615323,0.512714669239097,"Democrat","(B=-0.504; SE=0.437; CI95%=[-1.521,0.513])"
+"90","0. Intercept",47.4982768406679,1.91918393250165,24.7492051367657,1.86858914244868e-77,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",43.0335873793994,51.9629663019365,"Republican","(B=47.498; SE=1.919; CI95%=[43.034,51.963])"
+"91","5. Congenial News",-0.114256916082575,0.105467829657598,-1.08333428737001,0.279446206491086,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",-0.359611777386229,0.131097945221079,"Republican","(B=-0.114; SE=0.105; CI95%=[-0.36,0.131])"
+"92","4. Cross-Cutting News",-0.349819810163312,0.205886305878289,-1.69909216968568,0.0902385733364384,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",-0.828782980137392,0.129143359810769,"Republican","(B=-0.35; SE=0.206; CI95%=[-0.829,0.129])"
+"93","3. Partisanship Strength",4.25416671713482,0.908319155208163,4.68355939951512,4.11229792004832e-06,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",2.14110038146574,6.36723305280391,"Republican","(B=4.254; SE=0.908; CI95%=[2.141,6.367])"
+"94","2. Congenial × Partisan",0.0584952901772897,0.0525334190697212,1.11348720896418,0.266304745687107,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",-0.0637157175916528,0.180706297946232,"Republican","(B=0.058; SE=0.053; CI95%=[-0.064,0.181])"
+"95","1. Cross-Cutting × Partisan",0.174040369294324,0.096022241950493,1.81250058068895,0.0708120456736143,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",-0.0493407691278409,0.397421507716488,"Republican","(B=0.174; SE=0.096; CI95%=[-0.049,0.397])"
+"96","0. Wave",-1.25397839999819,0.663237882422653,-1.8906917611788,0.0595360669872635,"Attitude Extremity","Political News","Mean","Model 3
+Strong vs. Weak Partisans","att_extr_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",-2.79690043775547,0.288943637759102,"Republican","(B=-1.254; SE=0.663; CI95%=[-2.797,0.289])"
+"97","7. Centrist News",-0.0417808254069046,0.124732343758092,-0.334963844565728,0.737970073214041,"Feeling Thermometer","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 1",-0.331951648132674,0.248389997318865,"Democrat","(B=-0.042; SE=0.125; CI95%=[-0.332,0.248])"
+"98","8. Liberal News",0.215907236656444,0.167604255426855,1.28819662786348,0.199024616330866,"Feeling Thermometer","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 1",-0.173998566636018,0.605813039948906,"Democrat","(B=0.216; SE=0.168; CI95%=[-0.174,0.606])"
+"99","6. Conservative News",-0.605832894521124,0.259798945605688,-2.33192976633797,0.0206042894577146,"Feeling Thermometer","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 1",-1.21021561930897,-0.00145016973327827,"Democrat","(B=-0.606; SE=0.26; CI95%=[-1.21,-0.001])"
+"100","7. Centrist News",0.255451677992079,0.200488520087219,1.27414615999434,0.206545664298592,"Feeling Thermometer","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 1",-0.210954364482418,0.721857720466576,"Republican","(B=0.255; SE=0.2; CI95%=[-0.211,0.722])"
+"101","8. Liberal News",1.32195154402035,0.608640527390869,2.17197423524739,0.0330187370871387,"Feeling Thermometer","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 1",-0.0939580529304913,2.7378611409712,"Republican","(B=1.322; SE=0.609; CI95%=[-0.094,2.738])"
+"102","6. Conservative News",-0.894596652423534,0.301338163337539,-2.96874661514899,0.00401270381030331,"Feeling Thermometer","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 1",-1.59561404807119,-0.193579256775878,"Republican","(B=-0.895; SE=0.301; CI95%=[-1.596,-0.194])"
+"103","7. Centrist News",-0.045886868402873,0.0738922649691618,-0.620996912491767,0.534858918309964,"Feeling Thermometer","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 2",-0.217785981921945,0.126012245116199,"Democrat","(B=-0.046; SE=0.074; CI95%=[-0.218,0.126])"
+"104","8. Liberal News",0.250431742492487,0.117422384886755,2.13274277075881,0.0333879968791442,"Feeling Thermometer","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 2",-0.0227335729536221,0.523597057938596,"Democrat","(B=0.25; SE=0.117; CI95%=[-0.023,0.524])"
+"105","6. Conservative News",-0.0361359484965132,0.0538758038297739,-0.670726855615714,0.502676103683858,"Feeling Thermometer","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 2",-0.161469810198149,0.0891979132051225,"Democrat","(B=-0.036; SE=0.054; CI95%=[-0.161,0.089])"
+"106","7. Centrist News",0.0362553514723314,0.100465112970672,0.360875038113131,0.718423069336383,"Feeling Thermometer","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 2",-0.197461450502265,0.269972153446928,"Republican","(B=0.036; SE=0.1; CI95%=[-0.197,0.27])"
+"107","8. Liberal News",0.0248065734500699,0.201043907457379,0.123388834627226,0.901874087140034,"Feeling Thermometer","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 2",-0.442891493252267,0.492504640152406,"Republican","(B=0.025; SE=0.201; CI95%=[-0.443,0.493])"
+"108","6. Conservative News",-0.160596900239661,0.0623737044895469,-2.57475328031182,0.010465161956258,"Feeling Thermometer","News Domains","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ domain_center_mean_ln + domain_left_mean_ln + domain_right_mean_ln","Study 2",-0.30569983507497,-0.0154939654043517,"Republican","(B=-0.161; SE=0.062; CI95%=[-0.306,-0.015])"
+"109","5. Congenial News",0.216049987750847,0.143085654133629,1.50993465458862,0.132482071514666,"Feeling Thermometer","News Domains","Mean","Model 2
+Congenial vs. Cross-Cutting News","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln","Study 1",-0.116817019548663,0.548916995050358,"Democrat","(B=0.216; SE=0.143; CI95%=[-0.117,0.549])"
+"110","4. Cross-Cutting News",-0.589541622262917,0.113512579237571,-5.19362370428623,4.65914117849657e-07,"Feeling Thermometer","News Domains","Mean","Model 2
+Congenial vs. Cross-Cutting News","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln","Study 1",-0.853611369649133,-0.325471874876702,"Democrat","(B=-0.59; SE=0.114; CI95%=[-0.854,-0.325])"
+"111","5. Congenial News",0.0741284039713981,0.348040655912685,0.212987772296335,0.831906779800723,"Feeling Thermometer","News Domains","Mean","Model 2
+Congenial vs. Cross-Cutting News","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln","Study 1",-0.735535235990857,0.883792043933653,"Republican","(B=0.074; SE=0.348; CI95%=[-0.736,0.884])"
+"112","4. Cross-Cutting News",-0.737465135056688,0.267138312036829,-2.76061164508301,0.00722807436206125,"Feeling Thermometer","News Domains","Mean","Model 2
+Congenial vs. Cross-Cutting News","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln","Study 1",-1.35892177933842,-0.116008490774952,"Republican","(B=-0.737; SE=0.267; CI95%=[-1.359,-0.116])"
+"113","5. Congenial News",0.214355413938289,0.101458655293034,2.11273659520901,0.0350724739337923,"Feeling Thermometer","News Domains","Mean","Model 2
+Congenial vs. Cross-Cutting News","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln","Study 2",-0.0216727131057025,0.450383540982281,"Democrat","(B=0.214; SE=0.101; CI95%=[-0.022,0.45])"
+"114","4. Cross-Cutting News",-0.0476998973092734,0.0504664810761187,-0.945179776599195,0.344981384281569,"Feeling Thermometer","News Domains","Mean","Model 2
+Congenial vs. Cross-Cutting News","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln","Study 2",-0.165102488271024,0.0697026936524776,"Democrat","(B=-0.048; SE=0.05; CI95%=[-0.165,0.07])"
+"115","5. Congenial News",-0.179877575215302,0.0732852408155499,-2.45448569471215,0.0146214269884284,"Feeling Thermometer","News Domains","Mean","Model 2
+Congenial vs. Cross-Cutting News","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln","Study 2",-0.350364539385128,-0.00939061104547673,"Republican","(B=-0.18; SE=0.073; CI95%=[-0.35,-0.009])"
+"116","4. Cross-Cutting News",0.0626575740031803,0.105269288056457,0.595212289928058,0.552107055449559,"Feeling Thermometer","News Domains","Mean","Model 2
+Congenial vs. Cross-Cutting News","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln","Study 2",-0.182235410468752,0.307550558475113,"Republican","(B=0.063; SE=0.105; CI95%=[-0.182,0.308])"
+"117","0. Intercept",53.222659303274,2.24952828653503,23.6594754650778,2.24687210252281e-62,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",47.9894739562985,58.4558446502495,"Democrat","(B=53.223; SE=2.25; CI95%=[47.989,58.456])"
+"118","5. Congenial News",-0.0270495411895867,0.197492969100913,-0.136964578094753,0.891184625369076,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",-0.48648688999551,0.432387807616337,"Democrat","(B=-0.027; SE=0.197; CI95%=[-0.486,0.432])"
+"119","4. Cross-Cutting News",-0.168012168307424,0.170122171716561,-0.98759712865262,0.324439858796341,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",-0.563775520807457,0.227751184192609,"Democrat","(B=-0.168; SE=0.17; CI95%=[-0.564,0.228])"
+"120","3. Partisanship Strength",5.96060897726687,1.08910767584455,5.47292899450436,1.20138582379054e-07,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",3.42696565096435,8.4942523035694,"Democrat","(B=5.961; SE=1.089; CI95%=[3.427,8.494])"
+"121","2. Congenial × Partisan",0.0711546137483813,0.0985197838348978,0.722236803398028,0.470919391332803,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",-0.158036675926896,0.300345903423659,"Democrat","(B=0.071; SE=0.099; CI95%=[-0.158,0.3])"
+"122","1. Cross-Cutting × Partisan",0.0233400335898595,0.089654657447336,0.260332639200252,0.794851802467042,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",-0.185227888160611,0.231907955340329,"Democrat","(B=0.023; SE=0.09; CI95%=[-0.185,0.232])"
+"123","0. Wave",-11.1419031512002,0.953327614796932,-11.6873811041061,7.67168033326466e-25,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",-13.3596748211475,-8.92413148125295,"Democrat","(B=-11.142; SE=0.953; CI95%=[-13.36,-8.924])"
+"124","0. Intercept",56.4579651344485,4.18838418317536,13.4796529318487,1.29783046611127e-21,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",46.7143264942522,66.2016037746448,"Republican","(B=56.458; SE=4.188; CI95%=[46.714,66.202])"
+"125","5. Congenial News",-0.662902845913057,0.54240616269256,-1.22215212788575,0.225581720611356,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",-1.92472826935954,0.59892257753343,"Republican","(B=-0.663; SE=0.542; CI95%=[-1.925,0.599])"
+"126","4. Cross-Cutting News",0.260489092465559,0.324623739671426,0.802433896945487,0.424906712380605,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",-0.49469865418225,1.01567683911337,"Republican","(B=0.26; SE=0.325; CI95%=[-0.495,1.016])"
+"127","3. Partisanship Strength",3.03079270896083,2.27684281301984,1.33113831645717,0.187230125231791,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",-2.26593572863303,8.32752114655469,"Republican","(B=3.031; SE=2.277; CI95%=[-2.266,8.328])"
+"128","2. Congenial × Partisan",0.476025234695633,0.303872258345047,1.56653074317533,0.121549311448056,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",-0.230887347485357,1.18293781687662,"Republican","(B=0.476; SE=0.304; CI95%=[-0.231,1.183])"
+"129","1. Cross-Cutting × Partisan",-0.161165717660458,0.207762512105008,-0.775720874894894,0.440419684955973,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",-0.644493596001327,0.322162160680412,"Republican","(B=-0.161; SE=0.208; CI95%=[-0.644,0.322])"
+"130","0. Wave",-13.1719640812006,1.39836777569559,-9.41952775953273,3.05621041268469e-14,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 1",-16.4250539833173,-9.91887417908399,"Republican","(B=-13.172; SE=1.398; CI95%=[-16.425,-9.919])"
+"131","0. Intercept",62.8995794029371,1.96910204438992,31.9432807365884,2.57500645577016e-127,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",58.3187630482012,67.4803957576731,"Democrat","(B=62.9; SE=1.969; CI95%=[58.319,67.48])"
+"132","5. Congenial News",0.433694772185709,0.23549199570705,1.84165398438944,0.0660659936652775,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",-0.114141531381022,0.981531075752441,"Democrat","(B=0.434; SE=0.235; CI95%=[-0.114,0.982])"
+"133","4. Cross-Cutting News",-0.222255515957754,0.112847594778019,-1.96951930074318,0.049396750138756,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",-0.48477827816022,0.0402672462447125,"Democrat","(B=-0.222; SE=0.113; CI95%=[-0.485,0.04])"
+"134","3. Partisanship Strength",4.07599831496298,0.86766825648592,4.69764600063955,3.330167829144e-06,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",2.05750011111423,6.09449651881172,"Democrat","(B=4.076; SE=0.868; CI95%=[2.058,6.094])"
+"135","2. Congenial × Partisan",-0.114789835907054,0.108759088386002,-1.05545051554357,0.291684418576558,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",-0.367801309956448,0.138221638142341,"Democrat","(B=-0.115; SE=0.109; CI95%=[-0.368,0.138])"
+"136","1. Cross-Cutting × Partisan",0.0818560871778331,0.0499322917891088,1.6393416814024,0.101716030938099,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",-0.0343037936717472,0.198015968027413,"Democrat","(B=0.082; SE=0.05; CI95%=[-0.034,0.198])"
+"137","0. Wave",0.767827698482678,0.72299079818506,1.06201586577613,0.288696278137233,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",-0.914100407826226,2.44975580479158,"Democrat","(B=0.768; SE=0.723; CI95%=[-0.914,2.45])"
+"138","0. Intercept",59.6739164559354,2.13162770758826,27.9945303035355,3.60215988834631e-89,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",54.7150088701409,64.6328240417299,"Republican","(B=59.674; SE=2.132; CI95%=[54.715,64.633])"
+"139","5. Congenial News",-0.316185383796568,0.140457112224783,-2.25111693376235,0.0250378077039049,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",-0.642937488214607,0.0105667206214719,"Republican","(B=-0.316; SE=0.14; CI95%=[-0.643,0.011])"
+"140","4. Cross-Cutting News",-0.047785424100502,0.207466049604631,-0.230328886059029,0.817979365667067,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",-0.530423627533887,0.434852779332883,"Republican","(B=-0.048; SE=0.207; CI95%=[-0.53,0.435])"
+"141","3. Partisanship Strength",6.8905016835956,1.00252374238839,6.87315560944207,3.14503978515493e-11,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",4.55828270681491,9.22272066037629,"Republican","(B=6.891; SE=1.003; CI95%=[4.558,9.223])"
+"142","2. Congenial × Partisan",0.073144286002456,0.0683503141565937,1.07013825620288,0.285341541873803,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",-0.0858623220257593,0.232150894030671,"Republican","(B=0.073; SE=0.068; CI95%=[-0.086,0.232])"
+"143","1. Cross-Cutting × Partisan",0.0775697384587582,0.103099329081992,0.752378692950265,0.452361312143234,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",-0.16227516656617,0.317414643483687,"Republican","(B=0.078; SE=0.103; CI95%=[-0.162,0.317])"
+"144","0. Wave",0.572582907706156,0.946680236424468,0.604832429869619,0.545707260147601,"Feeling Thermometer","News Domains","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ domain_congenial_mean_ln + domain_cross_mean_ln | partisan | domain_congenial_mean_ln*partisan + domain_cross_mean_ln*partisan","Study 2",-1.62972464769639,2.7748904631087,"Republican","(B=0.573; SE=0.947; CI95%=[-1.63,2.775])"
+"145","7. Centrist News",-0.417320737493332,0.125605289825388,-3.32247740579618,0.00104405143282568,"Feeling Thermometer","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 1",-0.709522336446906,-0.125119138539758,"Democrat","(B=-0.417; SE=0.126; CI95%=[-0.71,-0.125])"
+"146","8. Liberal News",0.298412196441869,0.176337107563151,1.69228247284821,0.0920014555164098,"Feeling Thermometer","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 1",-0.111809258852178,0.708633651735916,"Democrat","(B=0.298; SE=0.176; CI95%=[-0.112,0.709])"
+"147","6. Conservative News",0.142785609944208,0.217140441586375,0.657572623971157,0.511497087119699,"Feeling Thermometer","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 1",-0.362358594708545,0.647929814596961,"Democrat","(B=0.143; SE=0.217; CI95%=[-0.362,0.648])"
+"148","7. Centrist News",-0.213778261845891,0.25403405071372,-0.841533885891563,0.4027241826238,"Feeling Thermometer","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 1",-0.804749835657736,0.377193311965954,"Republican","(B=-0.214; SE=0.254; CI95%=[-0.805,0.377])"
+"149","8. Liberal News",1.57358421810345,0.672469331442576,2.34000889635786,0.0219458299180135,"Feeling Thermometer","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 1",0.00918661854434633,3.13798181766255,"Republican","(B=1.574; SE=0.672; CI95%=[0.009,3.138])"
+"150","6. Conservative News",-0.919253159239703,0.459183606737632,-2.0019293932785,0.0489087621335292,"Feeling Thermometer","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 1",-1.9874739665682,0.148967648088793,"Republican","(B=-0.919; SE=0.459; CI95%=[-1.987,0.149])"
+"151","7. Centrist News",-0.0258107160354172,0.0666309419265944,-0.387368320019432,0.698633406136324,"Feeling Thermometer","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 2",-0.180817466131689,0.129196034060854,"Democrat","(B=-0.026; SE=0.067; CI95%=[-0.181,0.129])"
+"152","8. Liberal News",0.282826920491045,0.125888021140303,2.24665474863435,0.0250579717526194,"Feeling Thermometer","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 2",-0.0100324098559086,0.575686250837998,"Democrat","(B=0.283; SE=0.126; CI95%=[-0.01,0.576])"
+"153","6. Conservative News",-0.0266741736554648,0.0620230855429164,-0.430068472440117,0.667314286559445,"Feeling Thermometer","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 2",-0.170961446849682,0.117613099538752,"Democrat","(B=-0.027; SE=0.062; CI95%=[-0.171,0.118])"
+"154","7. Centrist News",0.104061110011184,0.079814291045162,1.30379044464985,0.193211058397464,"Feeling Thermometer","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 2",-0.0816146962798055,0.289736916302174,"Republican","(B=0.104; SE=0.08; CI95%=[-0.082,0.29])"
+"155","8. Liberal News",-0.0752943042757408,0.221470949259143,-0.339973728056039,0.734091948287099,"Feeling Thermometer","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 2",-0.590512776246556,0.439924167695074,"Republican","(B=-0.075; SE=0.221; CI95%=[-0.591,0.44])"
+"156","6. Conservative News",-0.204465232871827,0.0701186936942625,-2.91598747922135,0.0037875576741931,"Feeling Thermometer","Political News","Mean","Model 1
+Partisan vs. Non-Partisan News","ap_ft_r ~ page_center_mean_ln + page_left_mean_ln + page_right_mean_ln","Study 2",-0.367585706877995,-0.0413447588656584,"Republican","(B=-0.204; SE=0.07; CI95%=[-0.368,-0.041])"
+"157","5. Congenial News",0.244829718866451,0.161599901206048,1.51503631524056,0.131185697723672,"Feeling Thermometer","Political News","Mean","Model 2
+Congenial vs. Cross-Cutting News","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln","Study 1",-0.13110786774945,0.620767305482351,"Democrat","(B=0.245; SE=0.162; CI95%=[-0.131,0.621])"
+"158","4. Cross-Cutting News",-0.418215623133793,0.100924461753052,-4.14384794200943,4.85789741716793e-05,"Feeling Thermometer","Political News","Mean","Model 2
+Congenial vs. Cross-Cutting News","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln","Study 1",-0.653001030171722,-0.183430216095865,"Democrat","(B=-0.418; SE=0.101; CI95%=[-0.653,-0.183])"
+"159","5. Congenial News",-0.186225590545153,0.507099006684838,-0.367237143221012,0.714462755717461,"Feeling Thermometer","Political News","Mean","Model 2
+Congenial vs. Cross-Cutting News","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln","Study 1",-1.36591428667465,0.993463105584341,"Republican","(B=-0.186; SE=0.507; CI95%=[-1.366,0.993])"
+"160","4. Cross-Cutting News",-0.518956310113196,0.253514685027468,-2.04704634785542,0.0441104771164095,"Feeling Thermometer","Political News","Mean","Model 2
+Congenial vs. Cross-Cutting News","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln","Study 1",-1.10871965866498,0.0708070384385879,"Republican","(B=-0.519; SE=0.254; CI95%=[-1.109,0.071])"
+"161","5. Congenial News",0.267664225640964,0.119555633965426,2.23882569782006,0.0255656604814455,"Feeling Thermometer","Political News","Mean","Model 2
+Congenial vs. Cross-Cutting News","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln","Study 2",-0.0104637692641088,0.545792220546037,"Democrat","(B=0.268; SE=0.12; CI95%=[-0.01,0.546])"
+"162","4. Cross-Cutting News",-0.0372824818159767,0.0556067958367542,-0.67046628483014,0.502841505843904,"Feeling Thermometer","Political News","Mean","Model 2
+Congenial vs. Cross-Cutting News","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln","Study 2",-0.166643233093033,0.0920782694610794,"Democrat","(B=-0.037; SE=0.056; CI95%=[-0.167,0.092])"
+"163","5. Congenial News",-0.190315595774017,0.0789235631947823,-2.41139132687561,0.0164342076987062,"Feeling Thermometer","Political News","Mean","Model 2
+Congenial vs. Cross-Cutting News","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln","Study 2",-0.373919259223927,-0.00671193232410733,"Republican","(B=-0.19; SE=0.079; CI95%=[-0.374,-0.007])"
+"164","4. Cross-Cutting News",0.0423363685957782,0.135815026889042,0.311720798246913,0.755448381406136,"Feeling Thermometer","Political News","Mean","Model 2
+Congenial vs. Cross-Cutting News","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln","Study 2",-0.273616630470345,0.358289367661902,"Republican","(B=0.042; SE=0.136; CI95%=[-0.274,0.358])"
+"165","0. Intercept",53.0362147901199,2.26418264056748,23.4240002727109,1.08871233455483e-61,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",47.7689383177956,58.3034912624443,"Democrat","(B=53.036; SE=2.264; CI95%=[47.769,58.303])"
+"166","5. Congenial News",-0.0899980194509497,0.209295411249023,-0.430004742645163,0.667615006501704,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",-0.576891954456617,0.396895915554718,"Democrat","(B=-0.09; SE=0.209; CI95%=[-0.577,0.397])"
+"167","4. Cross-Cutting News",-0.113560991030804,0.149671654989799,-0.75873411728189,0.448827426494329,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",-0.461749327420496,0.234627345358888,"Democrat","(B=-0.114; SE=0.15; CI95%=[-0.462,0.235])"
+"168","3. Partisanship Strength",6.01650032610226,1.08276268554319,5.5566195681041,7.90984486819016e-08,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",3.4976176544981,8.53538299770642,"Democrat","(B=6.017; SE=1.083; CI95%=[3.498,8.535])"
+"169","2. Congenial × Partisan",0.0953627301584244,0.112005473900843,0.851411335867813,0.395470911259792,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",-0.165200965931739,0.355926426248588,"Democrat","(B=0.095; SE=0.112; CI95%=[-0.165,0.356])"
+"170","1. Cross-Cutting × Partisan",0.0181248473721314,0.0691058673060946,0.262276534231891,0.793354792039511,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",-0.14263944011915,0.178889134863413,"Democrat","(B=0.018; SE=0.069; CI95%=[-0.143,0.179])"
+"171","0. Wave",-11.3440767200365,0.925967207905042,-12.2510566499455,1.26370418269624e-26,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",-13.4981985655779,-9.18995487449506,"Democrat","(B=-11.344; SE=0.926; CI95%=[-13.498,-9.19])"
+"172","0. Intercept",55.9574531518471,4.16606665816521,13.4317229519538,1.56644065579545e-21,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",46.2657328385121,65.6491734651822,"Republican","(B=55.957; SE=4.166; CI95%=[46.266,65.649])"
+"173","5. Congenial News",-1.04200624165602,0.703606460580027,-1.48095036079832,0.142923280831994,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",-2.67883963538777,0.594827152075724,"Republican","(B=-1.042; SE=0.704; CI95%=[-2.679,0.595])"
+"174","4. Cross-Cutting News",0.222696765767869,0.328393207891611,0.678140596139772,0.499826532891023,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",-0.541260075260233,0.986653606795972,"Republican","(B=0.223; SE=0.328; CI95%=[-0.541,0.987])"
+"175","3. Partisanship Strength",3.13341748503951,2.27072260732802,1.37992085643901,0.171766125159467,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",-2.14907322505451,8.41590819513353,"Republican","(B=3.133; SE=2.271; CI95%=[-2.149,8.416])"
+"176","2. Congenial × Partisan",0.342143583732443,0.351631496140085,0.973017455740476,0.333757829765186,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",-0.475873599758845,1.16016076722373,"Republican","(B=0.342; SE=0.352; CI95%=[-0.476,1.16])"
+"177","1. Cross-Cutting × Partisan",-0.0730790238514907,0.178893726129988,-0.408505236222705,0.684098640729227,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",-0.489248063313233,0.343090015610251,"Republican","(B=-0.073; SE=0.179; CI95%=[-0.489,0.343])"
+"178","0. Wave",-13.0326163407184,1.34606681769589,-9.68199807720303,9.91231385451606e-15,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 1",-16.1640360203822,-9.90119666105467,"Republican","(B=-13.033; SE=1.346; CI95%=[-16.164,-9.901])"
+"179","0. Intercept",63.4792549688818,1.94448795755299,32.6457434319965,1.02302535535943e-130,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",58.9556995427304,68.0028103950332,"Democrat","(B=63.479; SE=1.944; CI95%=[58.956,68.003])"
+"180","5. Congenial News",0.663457527761867,0.313883293324255,2.11370768012328,0.0349914816024729,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",-0.0667442043599508,1.39365925988368,"Democrat","(B=0.663; SE=0.314; CI95%=[-0.067,1.394])"
+"181","4. Cross-Cutting News",-0.240122480376966,0.127186196659356,-1.88796022433227,0.0595593273404661,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",-0.536001818582799,0.0557568578288671,"Democrat","(B=-0.24; SE=0.127; CI95%=[-0.536,0.056])"
+"182","3. Partisanship Strength",4.05682577692989,0.86891202392204,4.66885676022579,3.81186788840137e-06,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",2.03543413735033,6.07821741650945,"Democrat","(B=4.057; SE=0.869; CI95%=[2.035,6.078])"
+"183","2. Congenial × Partisan",-0.199435456473248,0.140619752550058,-1.41826061315427,0.156683103320422,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",-0.526565918866225,0.12769500591973,"Democrat","(B=-0.199; SE=0.141; CI95%=[-0.527,0.128])"
+"184","1. Cross-Cutting × Partisan",0.0983071601556498,0.0562265780961569,1.74841086696629,0.0809528594736769,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",-0.0324954202629362,0.229109740574236,"Democrat","(B=0.098; SE=0.056; CI95%=[-0.032,0.229])"
+"185","0. Wave",0.625602659040878,0.715160479001222,0.874772414597883,0.38208097012973,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",-1.03810940088165,2.2893147189634,"Democrat","(B=0.626; SE=0.715; CI95%=[-1.038,2.289])"
+"186","0. Intercept",59.8821546033696,2.1012975762053,28.4977031722989,5.60134051954047e-91,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",54.9938054542373,64.770503752502,"Republican","(B=59.882; SE=2.101; CI95%=[54.994,64.771])"
+"187","5. Congenial News",-0.316081543225227,0.149964908551649,-2.10770337059463,0.0358128333585498,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",-0.664952089415086,0.032789002964631,"Republican","(B=-0.316; SE=0.15; CI95%=[-0.665,0.033])"
+"188","4. Cross-Cutting News",-0.0743602470558908,0.292704027248565,-0.254045862487378,0.799618824271201,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",-0.755291638568782,0.606571144457,"Republican","(B=-0.074; SE=0.293; CI95%=[-0.755,0.607])"
+"189","3. Partisanship Strength",6.93797951199313,0.999361628528261,6.94241134934363,2.05336936107122e-11,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",4.61311671206842,9.26284231191785,"Republican","(B=6.938; SE=0.999; CI95%=[4.613,9.263])"
+"190","2. Congenial × Partisan",0.0675975193600735,0.0747033105951708,0.904879834929877,0.366191195928677,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",-0.106188368426815,0.241383407146962,"Republican","(B=0.068; SE=0.075; CI95%=[-0.106,0.241])"
+"191","1. Cross-Cutting × Partisan",0.0746961847678055,0.136506906681569,0.547197109535637,0.584614297740994,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",-0.242866367382754,0.392258736918365,"Republican","(B=0.075; SE=0.137; CI95%=[-0.243,0.392])"
+"192","0. Wave",0.492455742098304,0.947956483228572,0.519491929018816,0.603767050902876,"Feeling Thermometer","Political News","Mean","Model 3
+Strong vs. Weak Partisans","ap_ft_r ~ page_congenial_mean_ln + page_cross_mean_ln | partisan | page_congenial_mean_ln*partisan + page_cross_mean_ln*partisan","Study 2",-1.71282080734372,2.69773229154032,"Republican","(B=0.492; SE=0.948; CI95%=[-1.713,2.698])"

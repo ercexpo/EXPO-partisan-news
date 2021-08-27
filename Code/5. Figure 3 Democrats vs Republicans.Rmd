@@ -1,0 +1,119 @@
+---
+title: "5. Figure 3. Democrats vs. Republicans"
+---
+
+```{r}
+source('helpers.R')
+df1 = read.csv(paste0(datadir, 's1_survey_long.csv'))
+df2 = read.csv(paste0(datadir, 's2_survey_long.csv'))
+
+df1$data = "Study 1"
+df2$data = "Study 2"
+
+vars = c("att_extr_r", "ap_ft_r", "domain_left_mean_ln", 
+         "domain_right_mean_ln", "domain_center_mean_ln", 
+         "party_imp", "data", "person_id", "wave")
+
+df1 = na.omit(select(df1, vars))
+df2 = na.omit(select(df2, vars))
+
+# split according to partisanship
+df1 = split(df1, df1$party_imp)
+df2 = split(df2, df2$party_imp)
+```
+
+List of equations
+```{r}
+equations = 
+  paste0(c("att_extr_r ~ ", "ap_ft_r ~ "),
+  "domain_left_mean_ln + domain_right_mean_ln + domain_center_mean_ln")
+```
+
+Function to run analyses, predict results and create melted dataframe
+```{r}
+getdata = function(equation, df){
+    
+    # prepare data
+    dat = df[order(df$person_id),]
+    varnames = names(dat)[3:5]
+    dv = str_split_fixed(equation, " ~ ", 2)[,1]
+    
+    # run analysis
+    m = plm(as.formula(equation), 
+            data=dat, 
+            index = c("person_id", "wave"), 
+            model="within")
+    dat = cbind(dat, data.frame(id = dat$person_id, pred = pmodel.response(m)))
+  
+    # restructure data from long to wide
+    dat = merge(
+      subset(dat, wave == 1), subset(dat, wave == 2), by = "person_id", 
+      suffixes = c("_w1", "_w2")
+    )
+    
+    # difference values DV
+    for (i in 1:3){
+      dat[, paste0(varnames[i], "_diff")] = 
+        dat[, paste0(varnames[i], "_w2")] - dat[, paste0(varnames[i], "_w1")]
+    }
+    
+    dat[, paste0(dv, "_diff")] = 
+      dat[, paste0(dv, "_w2")] - dat[, paste0(dv, "_w1")]
+    
+    # final dataset
+    dat = select(dat, c("person_id", names(dat)[grepl("diff", names(dat))]))
+    dat = rbind(
+      data.frame(person_id = dat$person_id, iv = "IV: Liberal News", 
+                 iv_val = dat$domain_left_mean_ln_diff, 
+                 dv = dv, dv_val = dat[,paste0(dv, "_diff")]),
+      data.frame(person_id = dat$person_id, iv = "IV: Centrist News", 
+                 iv_val = dat$domain_center_mean_ln_diff, 
+                 dv = dv, dv_val = dat[,paste0(dv, "_diff")]),
+      data.frame(person_id = dat$person_id, iv = "IV: Conservative News", 
+                 iv_val = dat$domain_right_mean_ln_diff, 
+                 dv = dv, dv_val = dat[,paste0(dv, "_diff")])
+    )
+    
+    dat = merge(dat, 
+                 select(subset(df, wave == "1"), 
+                        c("person_id", "data", "party_imp")), 
+                 by = c("person_id"))
+    dat$dv[dat$dv == "att_extr_r"] = "DV: Attitude Polarization"
+    dat$dv[dat$dv == "ap_ft_r"] = "DV: Affective Polarization"
+    
+    return(dat)
+}
+```
+
+Run analyses 
+```{r}
+results = list()
+
+for (i in 1:2){
+  for (j in 1:2){
+    results[[length(results) + 1]] = getdata(equations[i], df1[[j]])
+    results[[length(results) + 1]] = getdata(equations[i], df2[[j]])
+  }
+}
+
+results = do.call(rbind, results)
+write_xlsx(results, paste0(tabdir, "Figure 3 - Data.xlsx"))
+```
+
+```{r}
+ggplot(results, aes(x = iv_val, y = dv_val, linetype = party_imp)) + 
+  geom_smooth(method = "lm", size = 0.5, color = "black") + 
+  facet_grid(iv ~ data+ dv ) + 
+  ylim(-30, 30) + ylab("Δ Dependent Variable") + 
+  xlim(-15, 15) + 
+  xlab("Δ Independent Variable") +  
+  theme_minimal() + 
+  theme(legend.position = 'bottom', legend.title = element_blank(),
+        axis.title = element_text(size = 10),
+        panel.grid.minor = element_blank(),
+        panel.spacing = unit(2, "lines"))
+
+ggsave(paste0(figdir, "Figure 3. Exposure effects by partisanship.png"), 
+       height = 8, width = 10)
+```
+
